@@ -1,9 +1,13 @@
+<!-- ASHEN OATH v1.2.0 -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ASHEN OATH</title>
+<title>ASHEN OATH — 어두운 덱빌딩 로그라이크</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Noto+Serif+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#090807; --panel:#171310; --panel2:#201a16; --line:#46362b;
@@ -11,7 +15,7 @@
   --gold:#b89c68; --iron:#6c6259; --green:#6b8c62; --blue:#647b99;
   --shadow:0 12px 40px rgba(0,0,0,.55);
 }
-*{box-sizing:border-box} button,[data-action]{-webkit-tap-highlight-color:transparent;touch-action:manipulation;} .map-node button{user-select:none;-webkit-user-select:none;} html,body{margin:0;min-height:100%;background:radial-gradient(circle at 50% 15%,#2a211c 0,#0f0d0c 35%,#060504 100%);color:var(--text);font-family:Georgia,'Times New Roman',serif}
+*{box-sizing:border-box} button{font:inherit;color:inherit;} .card{appearance:none;-webkit-appearance:none;text-align:left;} button,[data-action]{-webkit-tap-highlight-color:transparent;touch-action:manipulation;} .map-node button{user-select:none;-webkit-user-select:none;} html,body{margin:0;min-height:100%;background:radial-gradient(circle at 50% 15%,#2a211c 0,#0f0d0c 35%,#060504 100%);color:var(--text);font-family:Georgia,'Times New Roman',serif}
 body{overflow-x:hidden}.hidden{display:none!important}.app{min-height:100vh;position:relative}.app:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at center,transparent 45%,rgba(0,0,0,.55) 100%),repeating-linear-gradient(0deg,rgba(255,255,255,.012) 0 1px,transparent 1px 4px);mix-blend-mode:screen;opacity:.45}
 button{font:inherit;color:inherit}.screen{min-height:100vh;padding:26px;display:flex;flex-direction:column;gap:18px;position:relative}.screen.center{align-items:center;justify-content:center}.topbar{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-bottom:1px solid var(--line);background:rgba(10,8,7,.7);backdrop-filter:blur(4px);position:sticky;top:0;z-index:10}.brand{font-weight:700;letter-spacing:4px;color:var(--gold)}.pill{padding:5px 9px;border:1px solid var(--line);background:#100e0c;border-radius:999px;font-size:.85rem;color:var(--muted)}
 .title{font-size:clamp(42px,8vw,92px);letter-spacing:9px;margin:0;color:#efe6d8;text-shadow:0 0 22px rgba(167,125,73,.18)}.subtitle{max-width:720px;text-align:center;line-height:1.6;color:var(--muted);margin:0 auto}.menu-actions,.button-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}.btn{border:1px solid #5b4836;background:linear-gradient(#2a211b,#16110f);padding:11px 18px;border-radius:4px;cursor:pointer;transition:.18s;box-shadow:inset 0 0 0 1px rgba(255,255,255,.02),var(--shadow)}.btn:hover{transform:translateY(-1px);border-color:#8e7250}.btn.primary{background:linear-gradient(#6d2329,#351317);border-color:#8a3a3c}.btn.danger{background:linear-gradient(#512026,#261013)}.btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
@@ -21,20 +25,514 @@ button{font:inherit;color:inherit}.screen{min-height:100vh;padding:26px;display:
 .character-art,.enemy-art{display:grid;place-items:center;border:1px solid #3d3027;background:radial-gradient(circle at 50% 40%,#382f28,#100d0c 65%);min-height:150px;position:relative;overflow:hidden}.character-art:before,.enemy-art:before{content:"";position:absolute;inset:-30%;background:conic-gradient(from 20deg,transparent,#4b3328,transparent 40%,#241c18,transparent 70%);animation:slowspin 18s linear infinite;opacity:.35}@keyframes slowspin{to{transform:rotate(360deg)}}
 .silhouette{width:82px;height:120px;border-radius:45% 45% 22% 22%;background:linear-gradient(#0a0a0a,#211414);border:2px solid #5f292b;position:relative;z-index:1;filter:drop-shadow(0 0 12px rgba(142,35,41,.25))}.silhouette:after{content:"";position:absolute;left:20px;right:20px;top:28px;height:18px;border-top:2px solid #a14b4a;transform:skew(-18deg)}
 .enemy-symbol{font-size:64px;z-index:1;filter:drop-shadow(0 0 10px rgba(200,70,65,.22))}.boss-symbol{font-size:84px}
-.section-title{margin:0 0 9px;font-size:1.05rem;letter-spacing:1px}.small{font-size:.86rem;color:var(--muted)}.muted{color:var(--muted)}.gold{color:var(--gold)}.blood{color:#d15a57}.good{color:#93b58b}.bad{color:#d4776e}
-.map-wrap{position:relative;flex:1;display:flex;align-items:center;justify-content:center}.map-grid{width:min(100%,920px);display:grid;grid-template-columns:repeat(7,1fr);grid-template-rows:repeat(5,88px);gap:12px;position:relative}.map-grid:before{content:"";position:absolute;inset:20px 8% 20px 8%;background:linear-gradient(90deg,transparent 0 48%,rgba(162,132,89,.11) 49%,transparent 50%);pointer-events:none}.map-node{position:relative;z-index:1;display:flex;align-items:center;justify-content:center}.map-node button{width:58px;height:58px;border-radius:50%;border:1px solid #5a4635;background:#18120f;box-shadow:var(--shadow);font-size:22px;cursor:pointer}.map-node button:hover{border-color:#997c55;transform:scale(1.04)}.map-node.done button{opacity:.3}.map-node.locked button{opacity:.18;cursor:not-allowed}.map-node .label{position:absolute;top:64px;font-size:.72rem;color:var(--muted);white-space:nowrap}.map-node.current button{border-color:var(--blood2);box-shadow:0 0 0 2px rgba(143,31,37,.25),var(--shadow)}
-.battle-layout{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:14px;flex:1}.battle-main{display:flex;flex-direction:column;min-height:0}.battle-scene{position:relative;min-height:340px;flex:1;display:grid;place-items:center;border:1px solid var(--line);background:radial-gradient(circle at 50% 35%,#2a201b,#13100e 48%,#090807 100%);overflow:hidden}.battle-scene:after{content:"";position:absolute;inset:auto 0 0;height:60px;background:linear-gradient(transparent,rgba(0,0,0,.8))}.fog{position:absolute;inset:0;background:radial-gradient(ellipse at 25% 60%,rgba(220,210,205,.05),transparent 35%),radial-gradient(ellipse at 75% 45%,rgba(220,210,205,.04),transparent 35%);animation:fog 8s ease-in-out infinite alternate}@keyframes fog{to{transform:translateX(18px) scale(1.03)}}.enemy-card{width:min(440px,88%);text-align:center;position:relative;z-index:2}.enemy-name{font-size:1.5rem;margin-bottom:6px}.hpbar{height:13px;background:#2a1d1a;border:1px solid #4a332b;border-radius:999px;overflow:hidden}.hpfill{height:100%;background:linear-gradient(90deg,#7b1d22,#b4433f);transition:.25s}.block-badge{display:inline-block;padding:3px 7px;border:1px solid #53657a;background:#18202b;color:#9db4cd;border-radius:5px;font-size:.78rem}.intent{margin-top:12px;display:inline-flex;gap:7px;align-items:center;padding:6px 9px;border:1px solid #45352b;background:#120f0d}.status-row{display:flex;justify-content:center;gap:7px;flex-wrap:wrap;margin-top:10px}.status{padding:4px 6px;border:1px solid #40332b;background:#120f0d;border-radius:4px;font-size:.76rem}.status.bleed{border-color:#71333a}.status.poison{border-color:#486545}.status.weak{border-color:#655e88}.status.vulnerable{border-color:#8b6f50}.status.stun{border-color:#9c8e52}.status.strength{border-color:#84552d}.player-bar{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;margin-top:10px}.resource{padding:10px 12px;border:1px solid var(--line);background:#120f0d}.resource .value{font-size:1.2rem}.hand-area{border-top:1px solid var(--line);padding-top:12px;display:flex;flex-direction:column;gap:8px}.hand{display:flex;justify-content:center;gap:9px;min-height:205px;align-items:flex-end}.card{width:165px;min-height:195px;border:1px solid #65513f;background:linear-gradient(180deg,#241d18,#120f0d);padding:10px;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;position:relative;transition:.15s;box-shadow:var(--shadow)}.card:hover{transform:translateY(-11px) rotate(-.5deg);border-color:#ad8757}.card.disabled{opacity:.42;filter:grayscale(.25);cursor:not-allowed}.card.attack{border-top:3px solid #8e3032}.card.skill{border-top:3px solid #4d617c}.card.power{border-top:3px solid #876f46}.card-cost{position:absolute;right:8px;top:7px;width:25px;height:25px;border-radius:50%;background:#312319;border:1px solid #886d4b;display:grid;place-items:center;color:#eadabf;font-weight:700}.card-name{font-weight:700;padding-right:28px}.card-type{font-size:.74rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px}.card-desc{font-size:.86rem;line-height:1.45}.card-footer{font-size:.72rem;color:#817367;display:flex;justify-content:space-between}.draw-ui{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.pile{padding:10px;border:1px solid var(--line);background:#120f0d;cursor:pointer;text-align:center}.side-section{margin-bottom:14px}.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:7px}.stat{border:1px solid var(--line);padding:8px;background:#100d0b}.stat b{display:block;font-size:1.15rem}.log{height:150px;overflow:auto;border:1px solid var(--line);background:#0d0b09;padding:8px;font-size:.77rem;line-height:1.5}.log div{margin-bottom:3px}.battle-actions{display:flex;justify-content:center;margin-top:8px}.floating-text{position:absolute;left:50%;top:42%;transform:translate(-50%,-50%);font-size:34px;font-weight:700;color:#f0c9bc;z-index:8;pointer-events:none;text-shadow:0 2px 10px rgba(0,0,0,.8);animation:floatText .8s ease-out forwards}@keyframes floatText{0%{opacity:0;transform:translate(-50%,-20%) scale(.8)}20%{opacity:1}100%{opacity:0;transform:translate(-50%,-100%) scale(1.2)}}.shake{animation:shake .28s linear}@keyframes shake{0%,100%{transform:none}20%{transform:translate(-5px,2px)}40%{transform:translate(4px,-2px)}60%{transform:translate(-3px,1px)}80%{transform:translate(3px,-1px)}}
+.section-title{margin:0 0 9px;font-size:1.05rem;letter-spacing:1px}.version-mark{margin-top:12px;font-size:.72rem;letter-spacing:2px;color:var(--muted)}.small{font-size:.86rem;color:var(--muted)}.muted{color:var(--muted)}.gold{color:var(--gold)}.blood{color:#d15a57}.good{color:#93b58b}.bad{color:#d4776e}
+.map-wrap{position:relative;flex:1;display:flex;align-items:center;justify-content:center}.map-grid{width:min(100%,920px);display:grid;grid-template-columns:repeat(7,1fr);grid-template-rows:repeat(5,88px);gap:12px;position:relative}.map-grid:before{content:"";position:absolute;inset:20px 8% 20px 8%;background:linear-gradient(90deg,transparent 0 48%,rgba(162,132,89,.11) 49%,transparent 50%);pointer-events:none}.map-node{position:relative;z-index:1;display:flex;align-items:center;justify-content:center}.map-node button{width:72px;height:72px;border-radius:50%;border:1px solid #5a4635;background:#18120f;box-shadow:var(--shadow);font-size:22px;cursor:pointer}.map-node button:hover{border-color:#997c55;transform:scale(1.04)}.map-node.done button{opacity:.3}.map-node.locked button{opacity:.18;cursor:not-allowed}.map-node .label{position:absolute;top:64px;font-size:.72rem;color:var(--muted);white-space:nowrap}.map-node.current button{border-color:var(--blood2);box-shadow:0 0 0 2px rgba(143,31,37,.25),var(--shadow)}
+.battle-layout{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:14px;flex:1}.battle-main{display:flex;flex-direction:column;min-height:0}.battle-scene{position:relative;min-height:340px;flex:1;display:grid;place-items:center;border:1px solid var(--line);background:radial-gradient(circle at 50% 35%,#2a201b,#13100e 48%,#090807 100%);overflow:hidden}.battle-scene:after{content:"";position:absolute;inset:auto 0 0;height:60px;background:linear-gradient(transparent,rgba(0,0,0,.8))}.fog{position:absolute;inset:0;background:radial-gradient(ellipse at 25% 60%,rgba(220,210,205,.05),transparent 35%),radial-gradient(ellipse at 75% 45%,rgba(220,210,205,.04),transparent 35%);animation:fog 8s ease-in-out infinite alternate}@keyframes fog{to{transform:translateX(18px) scale(1.03)}}.enemy-card{width:min(440px,88%);text-align:center;position:relative;z-index:2}.enemy-name{font-size:1.5rem;margin-bottom:6px}.hpbar{height:13px;background:#2a1d1a;border:1px solid #4a332b;border-radius:999px;overflow:hidden}.hpfill{height:100%;background:linear-gradient(90deg,#7b1d22,#b4433f);transition:.25s}.block-badge{display:inline-block;padding:3px 7px;border:1px solid #53657a;background:#18202b;color:#9db4cd;border-radius:5px;font-size:.78rem}.intent{margin-top:12px;display:inline-flex;gap:7px;align-items:center;padding:6px 9px;border:1px solid #45352b;background:#120f0d}.status-row{display:flex;justify-content:center;gap:7px;flex-wrap:wrap;margin-top:10px}.status{padding:4px 6px;border:1px solid #40332b;background:#120f0d;border-radius:4px;font-size:.76rem}.status.poison{border-color:#486545}.status.weak{border-color:#655e88}.status.vulnerable{border-color:#8b6f50}.status.stun{border-color:#9c8e52}.status.strength{border-color:#84552d}.player-bar{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;margin-top:10px}.resource{padding:10px 12px;border:1px solid var(--line);background:#120f0d}.resource .value{font-size:1.2rem}.hand-area{border-top:1px solid var(--line);padding-top:12px;display:flex;flex-direction:column;gap:8px}.hand{display:flex;justify-content:center;gap:9px;min-height:205px;align-items:flex-end}.card{width:165px;min-height:195px;border:1px solid #65513f;background:linear-gradient(180deg,#241d18,#120f0d);padding:10px;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;position:relative;transition:.15s;box-shadow:var(--shadow)}.card:hover{transform:translateY(-11px) rotate(-.5deg);border-color:#ad8757}.card.disabled{opacity:.42;filter:grayscale(.25);cursor:not-allowed}.card.attack{border-top:3px solid #8e3032}.card.skill{border-top:3px solid #4d617c}.card.power{border-top:3px solid #876f46}.card-cost{position:absolute;right:8px;top:7px;width:25px;height:25px;border-radius:50%;background:#312319;border:1px solid #886d4b;display:grid;place-items:center;color:#eadabf;font-weight:700}.card-name{font-weight:700;padding-right:28px}.card-type{font-size:.74rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px}.card-desc{font-size:.86rem;line-height:1.45}.card-footer{font-size:.72rem;color:#817367;display:flex;justify-content:space-between}.draw-ui{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.pile{padding:10px;border:1px solid var(--line);background:#120f0d;cursor:pointer;text-align:center}.side-section{margin-bottom:14px}.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:7px}.stat{border:1px solid var(--line);padding:8px;background:#100d0b}.stat b{display:block;font-size:1.15rem}.log{height:150px;overflow:auto;border:1px solid var(--line);background:#0d0b09;padding:8px;font-size:.77rem;line-height:1.5}.log div{margin-bottom:3px}.battle-actions{display:flex;justify-content:center;margin-top:8px}.floating-text{position:absolute;left:50%;top:42%;transform:translate(-50%,-50%);font-size:34px;font-weight:700;color:#f0c9bc;z-index:8;pointer-events:none;text-shadow:0 2px 10px rgba(0,0,0,.8);animation:floatText .8s ease-out forwards}@keyframes floatText{0%{opacity:0;transform:translate(-50%,-20%) scale(.8)}20%{opacity:1}100%{opacity:0;transform:translate(-50%,-100%) scale(1.2)}}.shake{animation:shake .28s linear}@keyframes shake{0%,100%{transform:none}20%{transform:translate(-5px,2px)}40%{transform:translate(4px,-2px)}60%{transform:translate(-3px,1px)}80%{transform:translate(3px,-1px)}}
 .reward-card{min-height:220px}.reward-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.choice-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}@media(max-width:800px){.reward-grid,.choice-grid{grid-template-columns:1fr 1fr}}@media(max-width:520px){.reward-grid,.choice-grid{grid-template-columns:1fr}}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.72);display:grid;place-items:center;z-index:50;padding:20px}.modal-content{width:min(800px,96vw);max-height:90vh;overflow:auto;padding:18px}.modal-close{float:right}.collection{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px}.collection .card{width:auto;min-width:0;min-height:160px;cursor:default}
 .progress{font-size:.8rem;color:var(--muted)}.tag{display:inline-block;padding:3px 7px;font-size:.7rem;border:1px solid #55473a;border-radius:999px;color:#b1a08e;margin-right:4px}.sep{height:1px;background:var(--line);margin:8px 0}.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#17110f;border:1px solid #6f5544;padding:10px 16px;z-index:100;opacity:0;pointer-events:none;transition:.2s;box-shadow:var(--shadow)}.toast.show{opacity:1;bottom:32px}
 .big-symbol{font-size:86px;line-height:1}.node-icon{font-size:24px}.ending{max-width:760px;text-align:center}.ending h2{font-size:3rem;margin:.2em 0}.ending p{line-height:1.8;color:var(--muted)}
+
+/* ===== v0.7 DARK FANTASY UI OVERHAUL ===== */
+:root{
+  --bg:#080706;--panel:#17120f;--panel2:#241b16;--line:#5a4634;
+  --text:#e8dfd0;--muted:#9b8c7c;--blood:#7d171d;--blood2:#bd3e3b;
+  --gold:#c5a66a;--gold2:#e5c98a;--ash:#b7afa4;--bone:#d8ccb9;
+  --shadow:0 14px 45px rgba(0,0,0,.72),inset 0 1px rgba(255,255,255,.035);
+}
+html,body{font-family:'Noto Serif KR','Cinzel',Georgia,serif;background:#070605;color:var(--text)}
+body{background:
+ radial-gradient(ellipse at 50% -15%,rgba(122,31,31,.28),transparent 42%),
+ radial-gradient(ellipse at 50% 110%,rgba(155,119,58,.08),transparent 38%),
+ #070605;}
+.app:before{opacity:.7;background:
+ radial-gradient(circle at 50% 35%,transparent 28%,rgba(0,0,0,.48) 82%),
+ repeating-linear-gradient(0deg,rgba(255,255,255,.018) 0 1px,transparent 1px 5px),
+ repeating-linear-gradient(90deg,rgba(255,255,255,.008) 0 1px,transparent 1px 7px);}
+.screen{padding:20px 24px 24px;gap:14px;max-width:1440px;margin:auto;width:100%;}
+.screen.center{min-height:100vh}
+.topbar{height:64px;padding:7px 14px;border:1px solid #403126;border-top-color:#665039;border-radius:3px;background:linear-gradient(180deg,rgba(27,21,17,.98),rgba(12,9,8,.98));box-shadow:0 8px 28px rgba(0,0,0,.5);position:relative;overflow:hidden}
+.topbar:after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:linear-gradient(90deg,transparent,#8b6c42,transparent);opacity:.55}
+.brand{font-family:'Cinzel',serif;font-size:1.05rem;letter-spacing:4px;color:var(--gold2);text-shadow:0 0 14px rgba(193,158,90,.22)}
+.pill{border:1px solid #4e3d2d;border-radius:3px;background:linear-gradient(#201812,#0e0b09);padding:7px 10px;font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.5px;box-shadow:inset 0 1px rgba(255,255,255,.04)}
+.title{font-family:'Cinzel',serif;font-weight:700;letter-spacing:11px;font-size:clamp(42px,8vw,96px);color:#eee4d2;text-shadow:0 3px 0 #1a1210,0 0 34px rgba(169,112,52,.22);}
+.subtitle{font-size:.95rem;color:#aa9b8b}
+h1,h2,h3,.section-title,.enemy-name,.card-name{font-family:'Cinzel','Noto Serif KR',Georgia,serif}
+h2{font-size:1.65rem;letter-spacing:1px;text-shadow:0 2px #080605}
+.small{font-size:.78rem;color:var(--muted)}
+.panel{border-radius:2px;border-color:#4e3b2c;background:linear-gradient(180deg,rgba(31,24,20,.97),rgba(13,10,8,.98));box-shadow:var(--shadow);position:relative}
+.panel:before{content:"";position:absolute;inset:5px;pointer-events:none;border:1px solid rgba(205,170,103,.045)}
+.btn{font-family:'Cinzel','Noto Serif KR',serif;font-weight:600;letter-spacing:.3px;border-radius:2px;border:1px solid #70563b;background:linear-gradient(#34271e,#16100d 55%,#0f0b09);padding:11px 19px;box-shadow:inset 0 1px rgba(255,255,255,.07),0 7px 18px rgba(0,0,0,.38);text-shadow:0 1px #000}
+.btn:hover{transform:translateY(-1px);border-color:#b28b56;box-shadow:inset 0 1px rgba(255,255,255,.08),0 10px 22px rgba(0,0,0,.5),0 0 12px rgba(160,113,54,.12)}
+.btn.primary{background:linear-gradient(#76252a,#43161a 55%,#241012);border-color:#9c4c48;box-shadow:inset 0 1px rgba(255,255,255,.08),0 8px 22px rgba(71,9,12,.35)}
+.btn.danger{background:linear-gradient(#592027,#2c1115)}
+.menu-actions .btn{min-width:170px}
+.menu-actions{gap:12px}
+.character-card,.content-card,.node-card,.relic-card{border-radius:2px}
+.character-art,.enemy-art{border-color:#49382b;background:
+ radial-gradient(ellipse at 50% 55%,#3a2820 0,#17110e 46%,#090706 78%),
+ repeating-linear-gradient(135deg,transparent 0 12px,rgba(210,174,109,.025) 12px 13px);box-shadow:inset 0 0 50px rgba(0,0,0,.72)}
+.character-art:after,.enemy-art:after{content:"";position:absolute;inset:12px;border:1px solid rgba(191,157,96,.07);pointer-events:none}
+.silhouette{background:linear-gradient(#050505,#181010);box-shadow:0 0 30px rgba(107,21,27,.28);}
+.enemy-symbol{font-family:Georgia,serif;color:#d0b89a;text-shadow:0 0 20px rgba(176,46,42,.38),0 3px 0 #090605}
+.sts-map{position:relative;background:radial-gradient(ellipse at center,rgba(88,62,38,.12),transparent 62%);border:1px solid rgba(112,87,59,.22);overflow:visible}.map-lines{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}.sts-map .map-node{z-index:1}.event-result{background:linear-gradient(180deg,#1d1510,#0c0907);border-color:#735437;box-shadow:0 18px 45px rgba(0,0,0,.5)}.event-choice{cursor:pointer;transition:.16s}.event-choice:hover{transform:translateY(-3px);border-color:#b38a55;box-shadow:0 10px 28px rgba(0,0,0,.45)}
+.map-wrap{padding:10px 0 24px}
+.map-grid{width:min(100%,1000px);grid-template-rows:repeat(5,100px);gap:14px;padding:8px 0;background:
+ radial-gradient(ellipse at center,rgba(91,68,43,.11),transparent 58%),
+ linear-gradient(180deg,rgba(18,14,11,.15),rgba(4,3,2,.35));}
+.map-grid:after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent 0 22px,rgba(196,163,103,.018) 22px 23px);mix-blend-mode:screen}
+.map-node button{width:66px;height:66px;border-radius:50%;border:2px solid #70583c;background:radial-gradient(circle,#35281e 0,#1a120f 58%,#090706 100%);font-size:23px;color:#d4c2a6;box-shadow:0 7px 22px rgba(0,0,0,.72),inset 0 0 14px rgba(210,172,102,.06);font-family:Georgia,serif}
+.map-node button:hover{border-color:#c3a26c;box-shadow:0 0 0 2px rgba(181,141,77,.12),0 10px 26px rgba(0,0,0,.8);transform:scale(1.07)}
+.map-node.current button{border-color:#c04b46;box-shadow:0 0 0 3px rgba(133,26,30,.18),0 0 25px rgba(131,28,31,.25),0 8px 24px rgba(0,0,0,.7)}
+.map-node .label{top:68px;font-family:'Noto Serif KR',serif;font-size:.68rem;color:#aa9a87;text-shadow:0 2px #000}
+.battle-layout{grid-template-columns:minmax(0,1fr) 270px;gap:12px}
+.battle-scene{min-height:390px;border-color:#49372b;background:
+ radial-gradient(ellipse at 50% 50%,rgba(89,52,37,.4),transparent 30%),
+ radial-gradient(ellipse at 50% 100%,#241713 0,#0e0b09 62%,#070605 100%);box-shadow:inset 0 -80px 100px rgba(0,0,0,.7),inset 0 0 80px rgba(0,0,0,.55)}
+.battle-scene:before{content:"";position:absolute;inset:0;background:linear-gradient(transparent 78%,rgba(5,3,2,.8)),repeating-linear-gradient(90deg,transparent 0 70px,rgba(190,155,96,.015) 70px 71px);pointer-events:none}
+.enemy-card{width:min(480px,90%)}
+.enemy-art{min-height:250px}
+.enemy-name{font-size:1.35rem;letter-spacing:1px;color:#e0d3c0}
+.hpbar{height:14px;border-radius:1px;border-color:#4f332e;background:#130c0b;box-shadow:inset 0 2px 5px rgba(0,0,0,.7)}
+.hpfill{background:linear-gradient(90deg,#571117,#9f292c,#c24a45);box-shadow:0 0 12px rgba(176,42,40,.18)}
+.intent{border:1px solid #604a36;background:linear-gradient(#1f1712,#0d0a08);border-radius:2px;box-shadow:0 5px 14px rgba(0,0,0,.35);font-family:'Noto Serif KR',serif}
+.player-bar{gap:8px}
+.resource{border:1px solid #4d392b;background:linear-gradient(#201712,#0e0b09);box-shadow:inset 0 1px rgba(255,255,255,.03)}
+.resource .value{font-family:'Cinzel',serif;color:#e0cfb4}
+.hand-area{padding-top:8px;border-top:1px solid #4c392b;background:linear-gradient(180deg,rgba(8,6,5,.1),rgba(0,0,0,.18))}
+.hand{min-height:225px;gap:8px;align-items:flex-end;perspective:900px}
+.card{width:168px;min-height:218px;padding:0;border:1px solid #73583d;border-radius:8px 8px 5px 5px;background:#15100d;box-shadow:0 15px 30px rgba(0,0,0,.68);overflow:hidden;transform-origin:bottom center}
+.card:hover{transform:translateY(-16px) rotate(-1deg) scale(1.025);z-index:20;border-color:#d0aa6d;box-shadow:0 22px 42px rgba(0,0,0,.82),0 0 16px rgba(184,142,76,.11)}
+.card-inner{height:100%;min-height:218px;padding:9px;display:flex;flex-direction:column;position:relative;background:linear-gradient(180deg,rgba(42,31,23,.98),rgba(14,10,8,.99));}
+.card-inner:before{content:"";position:absolute;inset:4px;border:1px solid rgba(216,186,126,.17);border-radius:5px;pointer-events:none}
+.card-top{display:flex;justify-content:space-between;align-items:center;position:relative;z-index:1;min-height:28px}
+.card-cost{position:static;width:28px;height:28px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#8c6b3e,#2b2118 70%);border:2px solid #c09a5d;color:#f3e3c7;box-shadow:0 2px 7px #000;font-family:'Cinzel',serif}
+.card-rarity{font-size:.55rem;letter-spacing:1.2px;color:#9c8973}
+.card-art{height:72px;margin:4px 3px 7px;border:1px solid #5b4735;background:radial-gradient(circle at 50% 50%,rgba(129,42,38,.4),rgba(13,9,7,.9) 70%);display:grid;place-items:center;position:relative;overflow:hidden}
+.card-art:before{content:"";position:absolute;inset:-20%;background:conic-gradient(from 30deg,transparent,#6e302a,transparent 32%,#6e5531,transparent 66%);opacity:.25;animation:slowspin 14s linear infinite}
+.card-art span{font-size:38px;color:#d5c0a1;text-shadow:0 0 16px rgba(187,54,49,.45);position:relative;z-index:1}
+.card-copy{position:relative;z-index:1;flex:1}
+.card-name{font-size:.92rem;text-align:center;letter-spacing:.4px;color:#eadcc8;line-height:1.18}
+.card-type{text-align:center;font-size:.58rem;letter-spacing:1.5px;text-transform:uppercase;color:#907d6a;margin:3px 0 6px}
+.card-desc{font-size:.74rem;line-height:1.45;text-align:center;color:#d0c3b2;padding:0 3px}
+.card-footer{position:relative;z-index:1;border-top:1px solid rgba(176,140,89,.15);padding-top:5px;font-size:.55rem;color:#8e7a66;display:flex;justify-content:space-between}
+.card.attack{border-top:3px solid #9d3638}.card.skill{border-top:3px solid #5b7390}.card.power{border-top:3px solid #9b8050}
+.card.rarity-rare{border-color:#9a7c4d}.card.rarity-uncommon{border-color:#6f6d61}
+.card.disabled{opacity:.43;filter:saturate(.45) grayscale(.2)}
+.side-section{border-bottom:1px solid rgba(168,129,78,.1);padding-bottom:12px}
+.side-section:last-child{border-bottom:0}
+.draw-ui{grid-template-columns:repeat(2,1fr);gap:7px}
+.pile{border-radius:2px;background:linear-gradient(#1d1510,#0d0a08);border-color:#4f3b2c;font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.6px}
+.log{height:155px;background:#0a0807;border-color:#3c2d23;color:#a99a89;font-size:.7rem}
+.status{border-radius:2px;background:#100c0a;border-color:#4b392b}
+.block-badge{border-radius:2px;background:#121820;border-color:#52657c}
+.reward-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.reward-card{padding:12px;cursor:pointer}.reward-card .card{width:100%;box-shadow:none;pointer-events:none}.reward-card:hover{transform:translateY(-4px);border-color:#c39c60}
+.choice-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.ending{max-width:700px;width:100%;text-align:center;padding:38px;border:1px solid #503b2b;background:radial-gradient(ellipse at 50% 0,rgba(126,29,32,.16),transparent 52%),linear-gradient(#1c1410,#0c0908);box-shadow:var(--shadow);position:relative}
+.ending:before{content:"";position:absolute;inset:8px;border:1px solid rgba(197,166,106,.08);pointer-events:none}
+.big-symbol{font-size:78px;color:#c4a36d;text-shadow:0 0 28px rgba(185,56,48,.25)}
+.tag{display:inline-block;padding:3px 7px;border:1px solid #5a4634;background:#15100d;color:#ad987d;border-radius:2px;font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.8px}
+.sep{height:1px;background:linear-gradient(90deg,transparent,#604932,transparent);margin:14px 0}
+.collection{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+.collection .card{min-height:170px}
+#toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(20px);z-index:100;opacity:0;pointer-events:none;padding:10px 18px;border:1px solid #77593b;background:#120d0a;box-shadow:0 10px 28px #000;color:#e2d1b7;font-family:'Noto Serif KR',serif;transition:.2s}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+#modal{background:rgba(0,0,0,.78);backdrop-filter:blur(3px)}
+.modal-content{border-color:#705338!important;box-shadow:0 30px 80px rgba(0,0,0,.9)!important}
+@media(max-width:900px){.reward-grid,.choice-grid{grid-template-columns:1fr 1fr}.battle-layout{grid-template-columns:1fr!important}.battle-scene{min-height:330px}.enemy-art{min-height:190px}}
+@media(max-width:620px){.screen{padding:10px}.topbar{height:58px}.brand{font-size:.82rem;letter-spacing:2px}.title{letter-spacing:6px;font-size:clamp(34px,12vw,64px)}.reward-grid,.choice-grid{grid-template-columns:1fr}.hand{min-height:215px;justify-content:flex-start!important;padding:0 5px 5px}.card{min-width:158px;width:158px;min-height:208px}.card-inner{min-height:208px}.card-art{height:62px}.player-bar{grid-template-columns:1fr 1fr}.player-bar .resource:last-child{grid-column:1/-1}.battle-scene{min-height:300px}.enemy-art{min-height:160px}.map-grid{min-width:680px}}
+
+/* ===== v1.0 COMBAT FEEDBACK / STS-STYLE HUD ===== */
+.battle-root{min-height:100vh;padding:0;display:flex;flex-direction:column;background:radial-gradient(circle at 50% 30%,#2a211d 0,#100d0b 48%,#050404 100%);overflow:hidden}
+.battle-top{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px;padding:10px 14px;background:rgba(7,6,5,.92);border-bottom:1px solid #4d3b2e;box-shadow:0 8px 30px rgba(0,0,0,.35);position:relative;z-index:12}
+.battle-top-left,.battle-top-right{display:flex;align-items:center;gap:8px}.battle-top-right{justify-content:flex-end}.act-badge{padding:5px 9px;border:1px solid #705a43;border-radius:4px;background:#17110e;color:#d5bd96;font-size:.75rem;letter-spacing:1px}.floor-badge{padding:5px 9px;border:1px solid #4d3b2e;background:#100d0b;color:#a99b8b;font-size:.75rem}.relic-strip{display:flex;gap:5px;align-items:center;overflow:hidden;max-width:42vw}.relic-chip{width:32px;height:32px;display:grid;place-items:center;border:1px solid #6b563e;background:linear-gradient(145deg,#34271d,#12100e);border-radius:5px;color:#d7be8f;font-size:.9rem;box-shadow:0 3px 10px rgba(0,0,0,.45)}
+.battle-stage{position:relative;flex:1;min-height:520px;overflow:hidden;background:radial-gradient(ellipse at 50% 57%,rgba(107,85,69,.22),transparent 37%),radial-gradient(ellipse at 50% 80%,rgba(18,18,18,.8),transparent 50%)}.battle-stage:before{content:"";position:absolute;left:6%;right:6%;bottom:20%;height:1px;background:linear-gradient(90deg,transparent,#5b4735 18%,#5b4735 82%,transparent);opacity:.45}.battle-stage:after{content:"";position:absolute;left:0;right:0;bottom:0;height:26%;background:linear-gradient(transparent,rgba(0,0,0,.94));pointer-events:none}.fog-band{position:absolute;inset:10% -8% auto;height:42%;background:radial-gradient(ellipse,rgba(232,220,207,.035),transparent 62%);filter:blur(5px);animation:fogdrift 9s ease-in-out infinite alternate}@keyframes fogdrift{to{transform:translateX(25px) scale(1.04)}}
+.combat-banner{position:absolute;top:18px;left:50%;transform:translateX(-50%);z-index:10;min-width:260px;max-width:70vw;text-align:center;padding:7px 14px;border:1px solid rgba(165,130,82,.42);background:linear-gradient(180deg,rgba(32,24,18,.95),rgba(13,11,9,.9));box-shadow:0 10px 28px rgba(0,0,0,.38);font-size:.76rem;color:#bfae96;letter-spacing:1px;pointer-events:none}.combat-banner.fx{animation:bannerPulse .55s ease-out}@keyframes bannerPulse{0%{opacity:.3;transform:translateX(-50%) translateY(-5px) scale(.96)}35%{opacity:1;transform:translateX(-50%) translateY(0) scale(1.02)}100%{transform:translateX(-50%) scale(1)}}
+.enemy-cluster{position:absolute;left:50%;top:72px;transform:translateX(-50%);z-index:4;width:min(440px,74vw);text-align:center}.enemy-portrait{position:relative;width:min(230px,48vw);height:180px;margin:auto;border:1px solid #594132;background:radial-gradient(circle at 50% 40%,#443329,#15110f 68%);box-shadow:0 18px 50px rgba(0,0,0,.55),inset 0 0 50px rgba(0,0,0,.35);display:grid;place-items:center}.enemy-portrait:before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,transparent 35%,rgba(211,181,150,.04),transparent 70%);pointer-events:none}.enemy-portrait .enemy-symbol{font-size:78px}.enemy-portrait.boss{height:205px;box-shadow:0 0 0 1px rgba(156,63,56,.15),0 22px 70px rgba(0,0,0,.65)}.enemy-intent{position:absolute;top:-20px;right:-24px;min-width:98px;padding:7px 9px;background:#0f0c0a;border:1px solid #7a4e43;box-shadow:0 10px 20px rgba(0,0,0,.5);transform:rotate(3deg);z-index:7}.enemy-intent .intent-icon{display:block;font-size:20px;color:#dd7f70}.enemy-intent .intent-num{font-size:1.05rem;font-weight:800;color:#ece3d8}.enemy-intent.attack{border-color:#8a4038}.enemy-intent.defend{border-color:#4e657a}.enemy-intent.buff{border-color:#7f6843}.enemy-nameplate{margin-top:8px;font-weight:700;letter-spacing:.5px}.enemy-sub{font-size:.72rem;color:#8f8478;margin-top:3px}.enemy-hp{margin:7px auto 0;width:min(330px,70vw)}
+.player-cluster{position:absolute;left:6%;bottom:108px;z-index:6;width:270px}.player-portrait{display:flex;align-items:center;gap:10px}.player-avatar{width:72px;height:72px;border:1px solid #5d4636;background:radial-gradient(circle at 50% 30%,#433329,#100d0b);display:grid;place-items:center;font-size:36px;box-shadow:0 10px 26px rgba(0,0,0,.48)}.player-meta{flex:1}.player-name{font-weight:700}.player-hp-row{display:flex;justify-content:space-between;gap:8px;margin-top:5px;font-size:.75rem;color:#a99b8d}.player-hpbar{height:11px;margin-top:3px;background:#261a18;border:1px solid #4a302b;border-radius:99px;overflow:hidden}.player-hpbar>div{height:100%;background:linear-gradient(90deg,#7d1f24,#bf433d);transition:.25s}.player-status-line{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px}.combat-status{padding:3px 6px;border:1px solid #4b3b31;background:#100d0b;font-size:.68rem;border-radius:4px}.combat-status.positive{border-color:#5b7454;color:#b8d0ac}.combat-status.negative{border-color:#745653;color:#d7a19a}
+.energy-orb{position:absolute;right:5.5%;bottom:95px;z-index:8;width:82px;height:82px;border-radius:50%;display:grid;place-items:center;border:2px solid #7690ad;background:radial-gradient(circle at 40% 35%,#52708e,#182a3a 60%,#0c1117);box-shadow:0 0 22px rgba(81,118,150,.22),inset 0 0 18px rgba(166,202,232,.12)}.energy-orb b{font-size:1.55rem}.energy-orb small{font-size:.58rem;color:#c0ceda;margin-top:-22px;letter-spacing:1px}
+.combat-bottom{position:relative;z-index:20;display:grid;grid-template-columns:130px 1fr 170px;align-items:end;gap:10px;padding:0 14px 14px;min-height:205px;background:linear-gradient(180deg,rgba(11,9,8,.2),rgba(8,7,6,.98) 28%)}.pile-stack{height:128px;display:flex;flex-direction:column;justify-content:flex-end;gap:6px}.pile-card{width:102px;height:122px;border:1px solid #4a3c30;background:linear-gradient(155deg,#2b2019,#100e0c);box-shadow:0 7px 15px rgba(0,0,0,.45);cursor:pointer;display:flex;align-items:flex-end;justify-content:center;padding:9px;font-size:.68rem;color:#948476}.pile-card:hover{border-color:#896e4e;transform:translateY(-2px)}.pile-count{font-size:1.5rem;font-weight:800;color:#d6c6b0}.pile-label{letter-spacing:1px;font-size:.66rem;color:#807267}
+.hand-dock{display:flex;justify-content:center;align-items:flex-end;min-height:185px;overflow:visible}.hand-dock .card{width:150px;min-height:184px;margin:0 -5px;transform-origin:50% 100%;box-shadow:0 12px 28px rgba(0,0,0,.55)}.hand-dock .card:hover{transform:translateY(-20px) scale(1.03);z-index:60}.hand-dock .card:nth-child(1){transform:rotate(-3deg)}.hand-dock .card:nth-child(2){transform:rotate(-1.5deg)}.hand-dock .card:nth-child(3){transform:rotate(0deg)}.hand-dock .card:nth-child(4){transform:rotate(1.5deg)}.hand-dock .card:nth-child(5){transform:rotate(3deg)}
+.end-turn-wrap{display:flex;justify-content:flex-end;align-items:flex-end;padding-bottom:10px}.end-turn-btn{min-width:142px;padding:13px 15px;border-radius:5px;border:1px solid #806145;background:linear-gradient(#3b2c21,#18120f);box-shadow:0 9px 22px rgba(0,0,0,.45);font-weight:700;cursor:pointer}.end-turn-btn:hover{border-color:#b28c59;transform:translateY(-1px)}.end-turn-sub{display:block;font-size:.65rem;color:#9f9180;margin-top:4px;font-weight:400}
+.combat-feed{position:absolute;top:60px;left:14px;z-index:11;width:210px;max-height:115px;overflow:hidden;pointer-events:none}.feed-line{font-size:.68rem;color:#a99b8c;margin:3px 0;text-shadow:0 2px 8px #000;opacity:.92}.feed-line:first-child{color:#e0d2be}.combat-flash{position:absolute;inset:0;pointer-events:none;z-index:9;opacity:0}.combat-flash.hit{background:radial-gradient(circle at 50% 36%,rgba(214,74,60,.22),transparent 30%);animation:hitFlash .24s ease-out}.combat-flash.block{background:radial-gradient(circle at 20% 75%,rgba(103,151,198,.19),transparent 26%);animation:blockFlash .35s ease-out}.combat-flash.status{background:radial-gradient(circle at 50% 36%,rgba(219,177,89,.12),transparent 25%);animation:blockFlash .32s ease-out}.combat-flash.heal{background:radial-gradient(circle at 18% 70%,rgba(110,174,105,.16),transparent 30%);animation:healFlash .4s ease-out}.combat-flash.card{background:radial-gradient(circle at 50% 84%,rgba(208,167,102,.13),transparent 26%);animation:cardFlash .28s ease-out}@keyframes hitFlash{0%{opacity:0}30%{opacity:1}100%{opacity:0}}@keyframes blockFlash{0%{opacity:0}25%{opacity:1}100%{opacity:0}}@keyframes healFlash{0%{opacity:0}25%{opacity:1}100%{opacity:0}}@keyframes cardFlash{0%{opacity:0}30%{opacity:1}100%{opacity:0}}
+.damage-pop,.block-pop,.status-pop{position:absolute;z-index:30;font-weight:900;pointer-events:none;text-shadow:0 3px 10px rgba(0,0,0,.9);animation:popUp .72s ease-out forwards}.damage-pop{color:#f1c3b3;font-size:2rem}.block-pop{color:#a9c7df;font-size:1.4rem}.status-pop{color:#e4c58e;font-size:1rem}@keyframes popUp{0%{opacity:0;transform:translate(-50%,10px) scale(.75)}15%{opacity:1}100%{opacity:0;transform:translate(-50%,-58px) scale(1.04)}}.enemy-hit-anim{animation:enemyHit .28s linear}@keyframes enemyHit{0%,100%{transform:translateX(-50%)}20%{transform:translateX(-53%)}40%{transform:translateX(-47%)}60%{transform:translateX(-52%)}80%{transform:translateX(-48%)}}.player-hit-anim{animation:playerHit .28s linear}@keyframes playerHit{0%,100%{transform:none}20%{transform:translateX(-4px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
+@media(max-width:900px){.battle-top{grid-template-columns:1fr auto}.battle-top-right{grid-column:1/-1;justify-content:flex-start}.relic-strip{max-width:100%}.player-cluster{left:3%;width:235px}.combat-bottom{grid-template-columns:95px 1fr 125px}.pile-card{width:80px}.hand-dock .card{width:132px;min-height:175px}.energy-orb{right:3%;width:72px;height:72px}}@media(max-width:650px){.battle-stage{min-height:500px}.enemy-cluster{top:62px}.player-cluster{left:10px;bottom:115px;width:205px}.player-avatar{width:58px;height:58px;font-size:28px}.combat-bottom{grid-template-columns:70px 1fr 100px;min-height:185px}.hand-dock{overflow-x:auto;justify-content:flex-start;padding-left:10px}.hand-dock .card{width:125px;min-width:125px;margin-right:-2px}.pile-card{width:62px;height:105px}.energy-orb{bottom:96px;right:7px}.end-turn-btn{min-width:92px;padding:11px 8px}.end-turn-sub{display:none}.combat-feed{width:160px;top:54px}.enemy-intent{right:-12px;min-width:82px}.enemy-portrait{height:150px}.enemy-portrait.boss{height:170px}}
+
+
+/* v1.1.6 combat presentation */
+.battle-top{
+  grid-template-columns:minmax(260px,1fr) auto minmax(300px,1fr);
+  padding:8px 14px;
+}
+.battle-top-left{min-width:0}
+.battle-top-left .combat-player-summary{
+  display:flex;align-items:center;gap:8px;min-width:0;
+}
+.combat-player-name{font-weight:800;white-space:nowrap}
+.combat-hp-chip{
+  display:flex;align-items:center;gap:5px;padding:5px 8px;
+  border:1px solid #6a3933;background:#17100f;border-radius:5px;
+  color:#e4c7bd;font-size:.78rem;white-space:nowrap;
+}
+.combat-hp-chip .hp-mini{
+  width:76px;height:7px;background:#2a1918;border:1px solid #51312d;
+  border-radius:99px;overflow:hidden;
+}
+.combat-hp-chip .hp-mini>i{display:block;height:100%;
+  background:linear-gradient(90deg,#7d1f24,#bf433d);transition:.25s}
+.combat-gold-chip,.combat-floor-chip{
+  padding:5px 8px;border:1px solid #4d3b2e;background:#100d0b;
+  border-radius:5px;font-size:.76rem;white-space:nowrap;
+}
+.combat-gold-chip{color:#d8bd83}
+.combat-floor-chip{color:#aaa093}
+.combat-relic-label{font-size:.65rem;color:#82766a;margin-right:1px}
+.relic-strip{max-width:260px}
+.relic-chip{
+  flex:0 0 32px;
+  position:relative;
+}
+.relic-chip:hover{border-color:#a98a5c;transform:translateY(-2px)}
+.relic-chip:after{
+  content:"";position:absolute;inset:-2px;border-radius:6px;
+  border:1px solid rgba(255,205,123,.0);transition:.18s;
+}
+.relic-chip:hover:after{border-color:rgba(255,205,123,.28)}
+.status-tooltip{position:fixed;z-index:1000;min-width:190px;max-width:280px;padding:11px 13px;border:1px solid #806545;background:linear-gradient(145deg,rgba(31,24,19,.98),rgba(12,10,9,.98));border-radius:6px;box-shadow:0 12px 32px rgba(0,0,0,.6),0 0 0 1px rgba(255,215,150,.05);pointer-events:none;opacity:0;transform:translateY(4px);transition:opacity .12s,transform .12s}.status-tooltip.show{opacity:1;transform:translateY(0)}.status-tooltip .tooltip-title{font-weight:700;color:#e7c98f;margin-bottom:4px}.status-tooltip .tooltip-meta{font-size:.72rem;color:#9f9183;margin-bottom:6px}.status-tooltip .tooltip-desc{font-size:.82rem;line-height:1.5;color:#ddd2c4}.status-tooltip .tooltip-value{color:#e7c98f;font-weight:700}.inspectable{cursor:pointer;touch-action:manipulation}.inspectable:active{filter:brightness(1.2)}
+
+.combat-bottom{
+  grid-template-columns:1fr 164px;
+}
+.pile-stack{
+  flex-direction:row;align-items:flex-end;gap:6px;height:128px;
+}
+.pile-card{
+  width:82px;height:112px;
+}
+.energy-orb{
+  left:6.5%;right:auto;bottom:94px;
+  width:76px;height:76px;
+  z-index:24;
+}
+.energy-orb b{font-size:1.45rem}
+.hand-dock .card{
+  position:relative;
+  animation:handSettle .32s ease-out both;
+}
+@keyframes handSettle{
+  from{opacity:.15;transform:translateY(28px) scale(.94)}
+  to{opacity:1}
+}
+.hand-dock .card:hover{animation:none}
+
+.card-play-overlay{
+  position:absolute;left:50%;bottom:4%;z-index:55;
+  width:130px;height:168px;pointer-events:none;
+  transform:translate(-50%,20px) scale(.82) rotate(-2deg);
+  opacity:0;
+  background:linear-gradient(180deg,#2b2119,#100d0b);
+  border:2px solid #b28b58;
+  box-shadow:0 18px 45px rgba(0,0,0,.7),0 0 28px rgba(188,139,78,.16);
+  border-radius:3px;
+  display:grid;place-items:center;text-align:center;
+  animation:cardPlayed .62s cubic-bezier(.18,.78,.24,1) forwards;
+}
+.card-play-overlay .play-card-symbol{font-size:42px}
+.card-play-overlay .play-card-name{font-size:.82rem;font-weight:800;margin-top:5px}
+@keyframes cardPlayed{
+  0%{opacity:0;transform:translate(-50%,38px) scale(.72) rotate(-5deg)}
+  18%{opacity:1}
+  55%{opacity:1;transform:translate(-50%,-55px) scale(1.02) rotate(2deg)}
+  100%{opacity:0;transform:translate(-50%,-125px) scale(.9) rotate(0)}
+}
+
+.draw-animation{
+  position:absolute;left:72px;bottom:88px;z-index:54;
+  pointer-events:none;display:flex;align-items:center;gap:4px;
+}
+.draw-animation .draw-card{
+  width:32px;height:45px;border-radius:3px;
+  border:1px solid #8a6a43;
+  background:linear-gradient(135deg,#312419,#0e0c0b);
+  box-shadow:0 6px 14px rgba(0,0,0,.5);
+  opacity:0;
+  animation:drawFly .62s cubic-bezier(.2,.8,.3,1) forwards;
+}
+.draw-animation .draw-card:after{
+  content:"✦";display:grid;place-items:center;height:100%;
+  color:#c3a36c;font-size:14px;
+}
+.draw-animation .draw-label{
+  position:absolute;left:0;top:-22px;white-space:nowrap;
+  color:#d4c1a4;font-size:.68rem;text-shadow:0 2px 8px #000;
+  animation:drawLabel .62s ease-out forwards;
+}
+@keyframes drawFly{
+  0%{opacity:0;transform:translate(0,24px) rotate(-12deg) scale(.7)}
+  20%{opacity:1}
+  100%{opacity:0;transform:translate(185px,-70px) rotate(5deg) scale(1)}
+}
+@keyframes drawLabel{
+  0%{opacity:0;transform:translateY(8px)}
+  20%,70%{opacity:1}
+  100%{opacity:0;transform:translateY(-8px)}
+}
+
+.shuffle-animation{
+  position:absolute;left:72px;bottom:88px;z-index:54;
+  pointer-events:none;width:86px;height:86px;
+}
+.shuffle-animation .shuffle-card{
+  position:absolute;left:20px;top:15px;width:42px;height:58px;
+  border:1px solid #8b6b45;border-radius:3px;
+  background:linear-gradient(135deg,#33271c,#0d0b09);
+  box-shadow:0 7px 15px rgba(0,0,0,.5);
+  animation:shuffleCard .65s ease-in-out forwards;
+}
+.shuffle-animation .shuffle-card:nth-child(2){animation-delay:.06s}
+.shuffle-animation .shuffle-card:nth-child(3){animation-delay:.12s}
+.shuffle-animation .shuffle-label{
+  position:absolute;left:0;top:-20px;white-space:nowrap;
+  color:#d6c19e;font-size:.68rem;text-shadow:0 2px 8px #000;
+  animation:drawLabel .7s ease-out forwards;
+}
+@keyframes shuffleCard{
+  0%{opacity:0;transform:translateX(0) rotate(0) scale(.8)}
+  18%{opacity:1}
+  45%{transform:translateX(24px) rotate(12deg) scale(1.02)}
+  75%{transform:translateX(-18px) rotate(-9deg) scale(.95)}
+  100%{opacity:0;transform:translateX(0) rotate(0) scale(.82)}
+}
+
+.deck-pulse{
+  animation:deckPulse .65s ease-out;
+}
+@keyframes deckPulse{
+  0%{box-shadow:0 0 0 rgba(180,140,85,0)}
+  30%{box-shadow:0 0 24px rgba(180,140,85,.28)}
+  100%{box-shadow:0 0 0 rgba(180,140,85,0)}
+}
+
+@media(max-width:900px){
+  .battle-top{grid-template-columns:1fr auto}
+  .battle-top-left{flex-wrap:wrap}
+  .relic-strip{max-width:190px}
+  .combat-bottom{grid-template-columns:1fr 125px}
+  .energy-orb{left:3%;width:70px;height:70px}
+}
+@media(max-width:650px){
+  .combat-hp-chip .hp-mini{width:52px}
+  .combat-player-name{display:none}
+  .relic-strip{max-width:120px}
+  .battle-top{padding:7px 8px}
+  .combat-bottom{grid-template-columns:72px 1fr 100px}
+  .energy-orb{left:7px;bottom:96px}
+  .draw-animation,.shuffle-animation{left:48px}
+}
+
+
+/* v1.1.6 — 에너지 색상 파란색 통일 */
+.energy-orb{background:radial-gradient(circle at 35% 28%,#79b7e8 0,#3977a8 34%,#173c61 68%,#0b1d31 100%) !important;border-color:#75a9cf !important;box-shadow:0 0 0 2px rgba(60,116,160,.22),0 0 26px rgba(54,126,185,.35),inset 0 0 20px rgba(160,210,255,.16) !important;color:#edf7ff !important}
+.energy-orb b{color:#f2f9ff !important;text-shadow:0 1px 3px #07111b,0 0 8px rgba(130,196,240,.35)}
+
+/* 뽑기/버리기 UI 제거: 덱 데이터와 내부 순환 로직은 유지 */
+.pile-stack,.pile-card{display:none !important}
+
+/* v1.1.6 — card energy indicator unified with blue energy orb */
+.card-cost{
+  background:radial-gradient(circle at 34% 28%,#8fc8f2 0,#4b8fc3 34%,#1c4d73 72%,#102b44 100%) !important;
+  border:2px solid #84b9dc !important;
+  color:#f4fbff !important;
+  box-shadow:0 2px 7px #000,0 0 8px rgba(72,142,194,.18) !important;
+  text-shadow:0 1px 2px #071522;
+}
+.card-cost:hover{box-shadow:0 2px 8px #000,0 0 12px rgba(74,155,214,.28) !important}
+
+ /* Simple two-sided duel staging — intentionally abstract for now */
+.battle-stage{
+  background:
+    radial-gradient(ellipse at 50% 54%,rgba(115,91,73,.18),transparent 28%),
+    linear-gradient(180deg,#17120f 0,#0b0908 64%,#050403 100%) !important;
+}
+.battle-stage .duel-ground{
+  position:absolute;
+  left:8%; right:8%; top:50%;
+  height:1px;
+  background:linear-gradient(90deg,transparent,#6d5845 12%,#6d5845 88%,transparent);
+  opacity:.65;
+  z-index:1;
+}
+.duel-aura{
+  position:absolute;
+  width:240px;height:180px;
+  border:1px solid rgba(184,147,92,.12);
+  background:radial-gradient(ellipse,rgba(177,139,88,.08),transparent 68%);
+  filter:blur(.4px);
+  pointer-events:none;
+  z-index:1;
+}
+.duel-aura.player{left:7%;top:29%}
+.duel-aura.enemy{right:7%;top:17%}
+
+.enemy-cluster{
+  left:auto !important;
+  right:11% !important;
+  top:24% !important;
+  transform:none !important;
+  width:min(310px,32vw) !important;
+  z-index:6 !important;
+}
+.enemy-portrait{
+  width:190px !important;
+  height:150px !important;
+  margin:0 auto !important;
+  border:2px solid #704738 !important;
+  background:
+    linear-gradient(180deg,#3a2820,#17100d) !important;
+  box-shadow:0 20px 45px rgba(0,0,0,.62),inset 0 0 35px rgba(0,0,0,.45) !important;
+  transform:skewY(-1deg);
+}
+.enemy-portrait .enemy-symbol{
+  font-size:68px !important;
+  opacity:.9;
+}
+.enemy-nameplate,.enemy-sub,.enemy-hp,.enemy-cluster .status-row{
+  position:relative;
+  z-index:3;
+}
+.enemy-intent{
+  right:-14px !important;
+  top:-16px !important;
+}
+
+.player-cluster{
+  left:10% !important;
+  right:auto !important;
+  bottom:auto !important;
+  top:43% !important;
+  width:min(310px,32vw) !important;
+  z-index:6 !important;
+}
+.player-portrait{
+  justify-content:flex-start;
+  align-items:center;
+}
+.player-avatar{
+  width:170px !important;
+  height:135px !important;
+  flex:0 0 170px;
+  border:2px solid #536d7d !important;
+  background:linear-gradient(180deg,#273842,#111b21) !important;
+  color:#d9edf7;
+  box-shadow:0 20px 42px rgba(0,0,0,.62),inset 0 0 32px rgba(121,170,199,.12) !important;
+  font-size:62px !important;
+  transform:skewY(1deg);
+}
+.player-meta{min-width:125px}
+.player-name{font-size:.82rem}
+.player-hp-row{font-size:.7rem}
+.player-status-line{margin-left:4px}
+
+.duel-spark{
+  position:absolute;
+  left:50%; top:46%;
+  width:54px;height:54px;
+  transform:translate(-50%,-50%) rotate(25deg);
+  z-index:8;
+  pointer-events:none;
+  opacity:.7;
+}
+.duel-spark:before,.duel-spark:after{
+  content:"";
+  position:absolute;
+  left:50%; top:50%;
+  width:4px;height:70px;
+  background:linear-gradient(180deg,transparent,#d7b774 45%,transparent);
+  box-shadow:0 0 12px rgba(218,185,113,.35);
+  transform:translate(-50%,-50%) rotate(45deg);
+}
+.duel-spark:after{transform:translate(-50%,-50%) rotate(-45deg)}
+
+.enemy-cluster.enemy-hit-anim .enemy-portrait{
+  animation:boxEnemyHit .28s linear;
+}
+.player-cluster.player-hit-anim .player-avatar{
+  animation:boxPlayerHit .28s linear;
+}
+@keyframes boxEnemyHit{
+  0%,100%{transform:skewY(-1deg) translateX(0)}
+  30%{transform:skewY(-1deg) translateX(13px)}
+  55%{transform:skewY(-1deg) translateX(-8px)}
+  75%{transform:skewY(-1deg) translateX(5px)}
+}
+@keyframes boxPlayerHit{
+  0%,100%{transform:skewY(1deg) translateX(0)}
+  30%{transform:skewY(1deg) translateX(-12px)}
+  55%{transform:skewY(1deg) translateX(8px)}
+  75%{transform:skewY(1deg) translateX(-5px)}
+}
+.duel-attack-line{
+  position:absolute;
+  left:25%; top:47%;
+  width:50%; height:3px;
+  z-index:7; pointer-events:none;
+  background:linear-gradient(90deg,transparent,#d1a46b 42%,#f4e0ae 50%,#d1a46b 58%,transparent);
+  transform-origin:center;
+  opacity:0;
+}
+.duel-attack-line.active{animation:duelStrike .34s ease-out}
+@keyframes duelStrike{
+  0%{opacity:0;transform:scaleX(.15)}
+  35%{opacity:.9;transform:scaleX(1)}
+  100%{opacity:0;transform:scaleX(.35)}
+}
+@media(max-width:900px){
+  .enemy-cluster{right:6% !important;top:22% !important;width:260px !important}
+  .player-cluster{left:5% !important;top:43% !important;width:260px !important}
+  .player-avatar{width:135px !important;flex-basis:135px;height:112px !important}
+  .enemy-portrait{width:150px !important;height:120px !important}
+}
+@media(max-width:650px){
+  .duel-aura{display:none}
+  .enemy-cluster{right:4% !important;top:18% !important;width:190px !important}
+  .player-cluster{left:3% !important;top:42% !important;width:190px !important}
+  .player-avatar{width:105px !important;flex-basis:105px;height:88px !important;font-size:40px !important}
+  .player-meta{min-width:88px}
+  .enemy-portrait{width:110px !important;height:90px !important}
+  .enemy-portrait .enemy-symbol{font-size:46px !important}
+  .duel-spark,.duel-attack-line{display:none}
+}
+
+
+/* v1.2.0 multi-enemy battle UI */
+.enemy-party{position:absolute;left:50%;top:54px;transform:translateX(-50%);z-index:4;width:min(940px,92vw);display:flex;justify-content:center;gap:16px;align-items:flex-start;flex-wrap:wrap;pointer-events:none}
+.enemy-unit{position:relative;width:min(220px,28vw);min-width:180px;text-align:center;pointer-events:auto}
+.enemy-select-hit{position:relative;cursor:pointer;touch-action:manipulation}
+.enemy-select-hit:active{filter:brightness(1.16)}
+.enemy-unit.targeted .enemy-portrait{border-color:#c79b59;box-shadow:0 0 0 2px rgba(199,155,89,.18),0 18px 50px rgba(0,0,0,.55),inset 0 0 50px rgba(0,0,0,.35)}
+.enemy-unit.dead{opacity:.4;filter:grayscale(.7)}
+.enemy-target-tag{position:absolute;left:50%;top:-16px;transform:translateX(-50%);padding:3px 8px;border:1px solid #b78b4f;background:#17110c;color:#e7c98f;font-size:.68rem;letter-spacing:.5px;z-index:9;opacity:0}
+.enemy-unit.targeted .enemy-target-tag{opacity:1}
+.enemy-unit .enemy-portrait{width:190px;height:154px}
+.enemy-unit .enemy-portrait .enemy-symbol{font-size:64px}
+.enemy-unit .enemy-nameplate{font-size:.92rem}
+.enemy-unit .enemy-sub{font-size:.7rem}
+.enemy-unit .enemy-hp{width:180px}
+.enemy-unit .status-row{min-height:28px}
+.enemy-unit .enemy-intent{top:-10px;right:-6px;min-width:84px}
+.enemy-select-help{position:absolute;left:50%;top:22px;transform:translateX(-50%);z-index:5;padding:4px 8px;border:1px solid rgba(199,155,89,.32);background:rgba(15,11,9,.72);color:#b6a38c;font-size:.7rem;pointer-events:none}
+.player-cluster{z-index:5}
+@media(max-width:900px){.enemy-party{width:96vw;gap:9px;top:52px}.enemy-unit{width:calc(50% - 9px);min-width:155px}.enemy-unit .enemy-portrait{width:150px;height:130px}.enemy-unit .enemy-portrait .enemy-symbol{font-size:52px}.enemy-unit .enemy-hp{width:150px}.enemy-unit .enemy-intent{right:-3px;min-width:76px}}
+@media(max-width:650px){.enemy-party{top:54px;gap:6px}.enemy-unit{min-width:142px}.enemy-unit .enemy-portrait{width:132px;height:112px}.enemy-unit .enemy-portrait .enemy-symbol{font-size:44px}.enemy-unit .enemy-hp{width:132px}.enemy-unit .enemy-nameplate{font-size:.78rem}.enemy-select-help{top:16px}.player-cluster{bottom:128px}}
 </style>
 </head>
 <body>
 <div id="app" class="app"></div>
-<div id="modal" class="modal hidden"></div>
+<div id="modal" class="modal hidden"></div><div id="status-tooltip" class="status-tooltip" aria-hidden="true"></div>
 <div id="toast" class="toast"></div>
 <script>
+
 'use strict';
 
 /* =========================================================
@@ -43,197 +541,430 @@ button{font:inherit;color:inherit}.screen{min-height:100vh;padding:26px;display:
    ========================================================= */
 
 const CARDS = {
-  strike:{id:'strike',name:'Strike',cost:1,type:'attack',rarity:'basic',description:'적에게 6의 피해를 준다.',effects:[{type:'damage',amount:6}]},
-  defend:{id:'defend',name:'Defend',cost:1,type:'skill',rarity:'basic',description:'방어도 5를 얻는다.',effects:[{type:'block',amount:5}]},
-  heavySlash:{id:'heavySlash',name:'Heavy Slash',cost:2,type:'attack',rarity:'common',description:'적에게 14의 피해를 준다.',effects:[{type:'damage',amount:14}],upgrade:{name:'Heavy Slash+',effects:[{type:'damage',amount:18}],description:'적에게 18의 피해를 준다.'}},
-  bloodSpear:{id:'bloodSpear',name:'Blood Spear',cost:1,type:'attack',rarity:'common',description:'적에게 7 피해를 주고 출혈 2를 부여한다.',effects:[{type:'damage',amount:7},{type:'status',status:'bleed',amount:2,target:'enemy'}],upgrade:{name:'Blood Spear+',effects:[{type:'damage',amount:9},{type:'status',status:'bleed',amount:3,target:'enemy'}],description:'9 피해 + 출혈 3.'}},
-  guard:{id:'guard',name:'Guard',cost:1,type:'skill',rarity:'common',description:'방어도 8을 얻는다.',effects:[{type:'block',amount:8}],upgrade:{name:'Guard+',effects:[{type:'block',amount:11}],description:'방어도 11을 얻는다.'}},
-  bleedingRitual:{id:'bleedingRitual',name:'Bleeding Ritual',cost:1,type:'skill',rarity:'common',description:'체력 3을 잃고 에너지를 2 회복한다. 적에게 출혈 4를 준다.',effects:[{type:'loseHp',amount:3},{type:'energy',amount:2},{type:'status',status:'bleed',amount:4,target:'enemy'}],upgrade:{name:'Bleeding Ritual+',effects:[{type:'loseHp',amount:2},{type:'energy',amount:2},{type:'status',status:'bleed',amount:6,target:'enemy'}],description:'체력 2를 잃고 에너지 2 + 출혈 6.'}},
-  darkStep:{id:'darkStep',name:'Dark Step',cost:1,type:'skill',rarity:'common',description:'방어도 4를 얻고 카드를 2장 뽑는다.',effects:[{type:'block',amount:4},{type:'draw',amount:2}],upgrade:{name:'Dark Step+',effects:[{type:'block',amount:6},{type:'draw',amount:2}],description:'방어도 6 + 카드 2장 드로우.'}},
-  rally:{id:'rally',name:'Rally',cost:0,type:'skill',rarity:'uncommon',description:'카드를 1장 뽑고, 이번 턴 힘 1을 얻는다.',effects:[{type:'draw',amount:1},{type:'status',status:'strength',amount:1,target:'player',duration:1}],upgrade:{name:'Rally+',effects:[{type:'draw',amount:2},{type:'status',status:'strength',amount:1,target:'player',duration:1}],description:'카드 2장 드로우 + 힘 1.'}},
-  bloodPact:{id:'bloodPact',name:'Blood Pact',cost:2,type:'power',rarity:'rare',description:'최대 체력 5을 희생해 영구적으로 힘 2를 얻는다.',effects:[{type:'loseMaxHp',amount:5},{type:'status',status:'strength',amount:2,target:'player',permanent:true}],upgrade:{name:'Blood Pact+',effects:[{type:'loseMaxHp',amount:3},{type:'status',status:'strength',amount:3,target:'player',permanent:true}],description:'최대 체력 3 희생 + 영구 힘 3.'}},
-  executionersSwing:{id:'executionersSwing',name:"Executioner's Swing",cost:2,type:'attack',rarity:'rare',description:'적에게 20 피해. 적이 출혈 상태면 8 추가 피해.',effects:[{type:'damageConditional',amount:20,bonus:8,condition:'bleed'}],upgrade:{name:"Executioner's Swing+",effects:[{type:'damageConditional',amount:25,bonus:10,condition:'bleed'}],description:'25 피해 + 출혈 시 10 추가.'}}
+  strike:{id:'strike',name:'타격',cost:1,type:'attack',rarity:'basic',description:'적에게 6의 피해를 준다.',effects:[{type:'damage',amount:6}],upgrade:{name:'타격+',effects:[{type:'damage',amount:9}],description:'적에게 9의 피해를 준다.'}},
+  bash:{id:'bash',name:'강타',cost:2,type:'attack',rarity:'basic',description:'피해를 8 주고 취약 2를 부여한다.',effects:[{type:'damage',amount:8},{type:'status',status:'vulnerable',amount:2,target:'enemy'}],upgrade:{name:'강타+',effects:[{type:'damage',amount:10},{type:'status',status:'vulnerable',amount:3,target:'enemy'}],description:'피해 10 + 취약 3.'}},
+  defend:{id:'defend',name:'수비',cost:1,type:'skill',rarity:'basic',description:'방어도 5를 얻는다.',effects:[{type:'block',amount:5}],upgrade:{name:'수비+',effects:[{type:'block',amount:8}],description:'방어도 8을 얻는다.'}},
+  anger:{id:'anger',name:'분노',cost:0,type:'attack',rarity:'common',description:'피해를 6 주고, 분노의 복사본 1장을 버린 카드 더미에 추가한다.',effects:[{type:'damage',amount:6},{type:'addDiscardCard',card:'anger'}],upgrade:{name:'분노+',effects:[{type:'damage',amount:8},{type:'addDiscardCard',card:'anger'}],description:'피해 8을 주고, 분노의 복사본 1장을 버린 카드 더미에 추가한다.'}},
+  bodySlam:{id:'bodySlam',name:'몸통 박치기',cost:1,type:'attack',rarity:'common',description:'현재 방어도만큼 피해를 준다.',effects:[{type:'damageBlock'}],upgrade:{name:'몸통 박치기+',cost:0,effects:[{type:'damageBlock'}],description:'0코스트. 현재 방어도만큼 피해를 준다.'}},
+  cleave:{id:'cleave',name:'절단',cost:1,type:'attack',rarity:'common',description:'모든 적에게 8의 피해를 준다.',effects:[{type:'damageAll',amount:8}],upgrade:{name:'절단+',effects:[{type:'damageAll',amount:11}],description:'모든 적에게 11의 피해를 준다.'}},
+  clothesline:{id:'clothesline',name:'클로스라인',cost:2,type:'attack',rarity:'common',description:'피해를 12 주고 약화 2를 부여한다.',effects:[{type:'damage',amount:12},{type:'status',status:'weak',amount:2,target:'enemy'}],upgrade:{name:'클로스라인+',effects:[{type:'damage',amount:14},{type:'status',status:'weak',amount:3,target:'enemy'}],description:'피해 14 + 약화 3.'}},
+  headbutt:{id:'headbutt',name:'박치기',cost:1,type:'attack',rarity:'common',description:'피해를 9 주고 버린 카드 더미의 카드 1장을 덱 맨 위로 되돌린다.',effects:[{type:'damage',amount:9},{type:'reclaimDiscard'}],upgrade:{name:'박치기+',effects:[{type:'damage',amount:12},{type:'reclaimDiscard'}],description:'피해 12 + 버린 카드 1장을 덱 맨 위로 되돌린다.'}},
+  heavyBlade:{id:'heavyBlade',name:'대검',cost:2,type:'attack',rarity:'common',description:'피해를 14 준다. 힘의 효과가 3배로 적용된다.',effects:[{type:'damageStrengthMult',amount:14,multiplier:3}],upgrade:{name:'대검+',effects:[{type:'damageStrengthMult',amount:14,multiplier:5}],description:'피해 14. 힘의 효과가 5배로 적용된다.'}},
+  pommelStrike:{id:'pommelStrike',name:'폼멜 타격',cost:1,type:'attack',rarity:'common',description:'피해를 9 주고 카드를 1장 뽑는다.',effects:[{type:'damage',amount:9},{type:'draw',amount:1}],upgrade:{name:'폼멜 타격+',effects:[{type:'damage',amount:10},{type:'draw',amount:2}],description:'피해 10을 주고 카드 2장을 뽑는다.'}},
+  shrugItOff:{id:'shrugItOff',name:'난관 극복',cost:1,type:'skill',rarity:'common',description:'방어도 8을 얻고 카드를 1장 뽑는다.',effects:[{type:'block',amount:8},{type:'draw',amount:1}],upgrade:{name:'난관 극복+',effects:[{type:'block',amount:11},{type:'draw',amount:1}],description:'방어도 11 + 카드 1장 드로우.'}},
+  trueGrit:{id:'trueGrit',name:'진정한 끈기',cost:1,type:'skill',rarity:'common',description:'방어도 7을 얻고 손에서 무작위 카드 1장을 소멸시킨다.',effects:[{type:'block',amount:7},{type:'exhaustRandomHand'}],upgrade:{name:'진정한 끈기+',effects:[{type:'block',amount:9},{type:'exhaustRandomHand'}],description:'방어도 9 + 손에서 무작위 카드 1장 소멸.'}},
+  inflame:{id:'inflame',name:'불타는 혈액',cost:1,type:'power',rarity:'uncommon',description:'힘 2를 얻는다.',effects:[{type:'status',status:'strength',amount:2,target:'player',permanent:true}],upgrade:{name:'불타는 혈액+',effects:[{type:'status',status:'strength',amount:3,target:'player',permanent:true}],description:'힘 3을 얻는다.'}},
+  demonForm:{id:'demonForm',name:'악마의 형상',cost:3,type:'power',rarity:'rare',description:'매 턴 시작 시 힘을 2 얻는다.',effects:[{type:'status',status:'demonForm',amount:2,target:'player',permanent:true}],upgrade:{name:'악마의 형상+',cost:3,effects:[{type:'status',status:'demonForm',amount:3,target:'player',permanent:true}],description:'매 턴 시작 시 힘 3을 얻는다.'}},
+  regret:{id:'regret',name:'후회',cost:99,type:'curse',rarity:'curse',description:'사용할 수 없는 저주 카드. 손에 남아 있으면 턴 종료 시 피해를 받는다.',effects:[]},
+  wound:{id:'wound',name:'부상',cost:99,type:'status',rarity:'status',description:'사용할 수 없다.',effects:[]},
+
+  clash:{id:'clash',name:'격돌',cost:0,type:'attack',rarity:'common',condition:'allAttacks',description:'손에 공격 카드만 있다면 피해를 14 준다.',effects:[{type:'damage',amount:14}],upgrade:{name:'격돌+',effects:[{type:'damage',amount:18}],description:'조건을 만족하면 피해 18.'}},
+  ironWave:{id:'ironWave',name:'철의 파동',cost:1,type:'attack',rarity:'common',description:'방어도 5를 얻고 피해를 5 준다.',effects:[{type:'block',amount:5},{type:'damage',amount:5}],upgrade:{name:'철의 파동+',effects:[{type:'block',amount:7},{type:'damage',amount:7}],description:'방어도 7 + 피해 7.'}},
+  perfectedStrike:{id:'perfectedStrike',name:'완벽한 타격',cost:2,type:'attack',rarity:'common',description:'피해를 6 준다. 덱의 이름에 "타격"이 포함된 카드 1장마다 피해가 2 증가한다.',effects:[{type:'perfectedStrike',base:6,perStrike:2}],upgrade:{name:'완벽한 타격+',effects:[{type:'perfectedStrike',base:6,perStrike:3}],description:'피해 6 + 타격 카드 1장마다 피해 +3.'}},
+  swordBoomerang:{id:'swordBoomerang',name:'부메랑 칼날',cost:1,type:'attack',rarity:'common',description:'무작위 적들에게 피해를 3씩 3번 준다.',effects:[{type:'damageRandom',amount:3,hits:3}],upgrade:{name:'부메랑 칼날+',effects:[{type:'damageRandom',amount:3,hits:4}],description:'무작위 적들에게 피해를 3씩 4번 준다.'}},
+  thunderclap:{id:'thunderclap',name:'천둥',cost:1,type:'attack',rarity:'common',description:'모든 적에게 피해 4를 주고 취약 1을 부여한다.',effects:[{type:'damageAll',amount:4},{type:'statusAll',status:'vulnerable',amount:1}],upgrade:{name:'천둥+',effects:[{type:'damageAll',amount:7},{type:'statusAll',status:'vulnerable',amount:1}],description:'모든 적에게 피해 7 + 취약 1.'}},
+  twinStrike:{id:'twinStrike',name:'이중 타격',cost:1,type:'attack',rarity:'common',description:'피해를 5씩 2번 준다.',effects:[{type:'damageHits',amount:5,hits:2}],upgrade:{name:'이중 타격+',effects:[{type:'damageHits',amount:7,hits:2}],description:'피해를 7씩 2번 준다.'}},
+  wildStrike:{id:'wildStrike',name:'난폭한 타격',cost:1,type:'attack',rarity:'common',description:'피해를 12 주고 뽑을 카드 더미에 부상을 섞어 넣는다.',effects:[{type:'damage',amount:12},{type:'addToDraw',card:'wound'}],upgrade:{name:'난폭한 타격+',effects:[{type:'damage',amount:17},{type:'addToDraw',card:'wound'}],description:'피해 17 + 뽑을 카드 더미에 부상 추가.'}},
+  flex:{id:'flex',name:'몸 풀기',cost:0,type:'skill',rarity:'common',description:'힘을 2 얻는다. 턴이 끝날 때 힘을 2 잃는다.',effects:[{type:'tempStrength',amount:2}],upgrade:{name:'몸 풀기+',effects:[{type:'tempStrength',amount:4}],description:'힘 4를 얻고 턴 종료 시 그만큼 잃는다.'}},
+  flameBarrier:{id:'flameBarrier',name:'화염 장벽',cost:2,type:'skill',rarity:'special',description:'방어도 12를 얻는다. 이번 턴 공격을 받을 때마다 공격한 적에게 피해 4를 준다.',effects:[{type:'block',amount:12},{type:'status',status:'flameBarrier',amount:4,target:'player'}],upgrade:{name:'화염 장벽+',effects:[{type:'block',amount:16},{type:'status',status:'flameBarrier',amount:6,target:'player'}],description:'방어도 16 + 공격받을 때 피해 6.'}},
+  shockwave:{id:'shockwave',name:'충격파',cost:2,type:'skill',rarity:'special',description:'모든 적에게 약화 3과 취약 3을 부여한다. 소멸.',exhaust:true,effects:[{type:'statusAll',status:'weak',amount:3},{type:'statusAll',status:'vulnerable',amount:3}],upgrade:{name:'충격파+',cost:2,exhaust:true,effects:[{type:'statusAll',status:'weak',amount:5},{type:'statusAll',status:'vulnerable',amount:5}],description:'모든 적에게 약화 5 + 취약 5. 소멸.'}},
+  impervious:{id:'impervious',name:'무적',cost:2,type:'skill',rarity:'rare',description:'방어도를 30 얻는다. 소멸.',exhaust:true,effects:[{type:'block',amount:30}],upgrade:{name:'무적+',cost:2,exhaust:true,effects:[{type:'block',amount:40}],description:'방어도 40. 소멸.'}},
+  limitBreak:{id:'limitBreak',name:'한계 돌파',cost:1,type:'skill',rarity:'rare',description:'현재 힘을 2배로 만든다.',effects:[{type:'doubleStrength'}],upgrade:{name:'한계 돌파+',cost:0,effects:[{type:'doubleStrength'}],description:'0코스트. 현재 힘을 2배로 만든다.'}},
+  offering:{id:'offering',name:'제물',cost:0,type:'skill',rarity:'rare',description:'체력을 6 잃고 에너지 2를 얻으며 카드 3장을 뽑는다. 소멸.',exhaust:true,effects:[{type:'loseHp',amount:6},{type:'energy',amount:2},{type:'draw',amount:3}],upgrade:{name:'제물+',cost:0,exhaust:true,effects:[{type:'loseHp',amount:6},{type:'energy',amount:2},{type:'draw',amount:5}],description:'체력 6을 잃고 에너지 2, 카드 5장. 소멸.'}},
+  corruption:{id:'corruption',name:'타락',cost:3,type:'power',rarity:'rare',description:'스킬 카드의 비용이 0이 되고, 스킬 카드를 사용하면 소멸시킨다.',effects:[{type:'status',status:'corruption',amount:1,target:'player',permanent:true}],upgrade:{name:'타락+',cost:2,effects:[{type:'status',status:'corruption',amount:1,target:'player',permanent:true}],description:'비용 2. 스킬 카드의 비용이 0이며 사용 시 소멸.'}},
+  juggernaut:{id:'juggernaut',name:'절대적인 힘',cost:2,type:'power',rarity:'rare',description:'방어도를 얻을 때마다 무작위 적에게 피해를 5 준다.',effects:[{type:'status',status:'juggernaut',amount:1,target:'player',permanent:true}],upgrade:{name:'절대적인 힘+',cost:2,effects:[{type:'status',status:'juggernaut',amount:1,target:'player',permanent:true}],description:'방어도를 얻을 때마다 무작위 적에게 피해 5.'}}
 };
 
 const RELICS = {
-  crackedHeart:{id:'crackedHeart',name:'Cracked Heart',rarity:'common',description:'전투 시작 시 방어도 3을 얻는다.',hooks:{onBattleStart:[{type:'block',amount:3}]}},
-  bloodChalice:{id:'bloodChalice',name:'Blood Chalice',rarity:'rare',description:'전투 시작 시 에너지 최대치를 4로 올린다. 이 전투 동안 유지.',hooks:{onBattleStart:[{type:'setMaxEnergy',amount:4}]}},
-  oldBell:{id:'oldBell',name:'Old Bell',rarity:'uncommon',description:'턴 종료 시 30% 확률로 1장 드로우.',hooks:{onTurnEnd:[{type:'chanceDraw',chance:.3,amount:1}]}},
-  ironThimble:{id:'ironThimble',name:'Iron Thimble',rarity:'common',description:'피해를 받을 때마다 10% 확률로 방어도 2를 얻는다.',hooks:{onDamageTaken:[{type:'chanceBlock',chance:.1,amount:2}]}}
+  burningBlood:{id:'burningBlood',name:'불타는 피',rarity:'starter',description:'전투 종료 시 체력을 6 회복한다.'},
+  crackedHeart:{id:'crackedHeart',name:'금이 간 심장',rarity:'common',description:'전투 시작 시 방어도 3을 얻는다.',hooks:{onBattleStart:[{type:'block',amount:3}]}},
+  bloodChalice:{id:'bloodChalice',name:'피의 성배',rarity:'rare',description:'전투 시작 시 에너지 최대치를 4로 올린다. 이 전투 동안 유지.',hooks:{onBattleStart:[{type:'setMaxEnergy',amount:4}]}},
+  oldBell:{id:'oldBell',name:'낡은 종',rarity:'uncommon',description:'턴 종료 시 30% 확률로 1장 드로우.',hooks:{onTurnEnd:[{type:'chanceDraw',chance:.3,amount:1}]}},
+  ironThimble:{id:'ironThimble',name:'철제 골무',rarity:'common',description:'피해를 받을 때마다 10% 확률로 방어도 2를 얻는다.',hooks:{onDamageTaken:[{type:'chanceBlock',chance:.1,amount:2}]}}
 };
 
 const STATUS_EFFECTS = {
-  bleed:{name:'Bleed',label:'출혈',color:'bleed'}, poison:{name:'Poison',label:'중독',color:'poison'}, weak:{name:'Weak',label:'약화',color:'weak'}, vulnerable:{name:'Vulnerable',label:'취약',color:'vulnerable'}, stun:{name:'Stun',label:'기절',color:'stun'}, strength:{name:'Strength',label:'힘',color:'strength'}
+  poison:{id:'poison',name:'Poison',label:'중독',color:'poison',description:'턴 종료 시 피해를 받고 중독 수치가 1 감소합니다.'},
+  weak:{id:'weak',name:'Weak',label:'약화',color:'weak',description:'공격으로 주는 피해가 감소합니다. 턴 종료 시 1 감소합니다.'},
+  vulnerable:{id:'vulnerable',name:'Vulnerable',label:'취약',color:'vulnerable',description:'받는 공격 피해가 증가합니다. 턴 종료 시 1 감소합니다.'},
+  stun:{id:'stun',name:'Stun',label:'기절',color:'stun',description:'다음 적 행동을 할 수 없습니다.'},
+  strength:{id:'strength',name:'Strength',label:'힘',color:'strength',description:'공격으로 주는 피해가 증가합니다. 전투가 끝나면 초기화됩니다.'},
+  flameBarrier:{id:'flameBarrier',name:'Flame Barrier',label:'화염 장벽',color:'strength',description:'이번 턴 공격받을 때마다 공격한 적에게 추가 피해를 줍니다. 전투가 끝나면 초기화됩니다.'},
+  corruption:{id:'corruption',name:'Corruption',label:'타락',color:'strength',description:'스킬 카드가 0코스트가 되며 사용 시 소멸합니다. 전투가 끝나면 초기화됩니다.'},
+  juggernaut:{id:'juggernaut',name:'Juggernaut',label:'절대적인 힘',color:'strength',description:'방어도를 얻을 때마다 무작위 적에게 5의 피해를 줍니다. 전투가 끝나면 초기화됩니다.'},
+  demonForm:{id:'demonForm',name:'Demon Form',label:'악마의 형상',color:'strength',description:'매 턴 시작 시 힘을 얻습니다. 전투가 끝나면 초기화됩니다.'}
 };
 
 const CHARACTERS = {
-  ashenHunter:{id:'ashenHunter',name:'The Ashen Hunter',maxHp:80,maxEnergy:3,startDeck:['strike','strike','strike','strike','strike','defend','defend','defend','defend','bleedingRitual'],startRelics:['crackedHeart'],description:'재를 뒤집어쓴 사냥꾼. 출혈과 순간 폭발력을 다룬다.'}
+  ashenHunter:{id:'ashenHunter',name:'잿빛 사냥꾼',maxHp:80,maxEnergy:3,startDeck:['strike','strike','strike','strike','strike','defend','defend','defend','defend','bash'],startRelics:['burningBlood'],description:'재를 뒤집어쓴 사냥꾼. 아이언클래드의 기본 전투 스타일을 기반으로 시작한다.'}
 };
 
 const ENEMIES = {
-  hollow:{id:'hollow',name:'The Hollow',maxHp:34,symbol:'☠',gold:15,actions:[{kind:'attack',amount:7,label:'공격 7'},{kind:'defend',amount:6,label:'방어 6'},{kind:'attack',amount:9,label:'공격 9'}]},
-  bloodLeech:{id:'bloodLeech',name:'Blood Leech',maxHp:30,symbol:'🩸',gold:18,actions:[{kind:'attackStatus',amount:5,status:'bleed',statusAmount:2,label:'5 + 출혈 2'},{kind:'attack',amount:6,label:'공격 6'},{kind:'attackStatus',amount:4,status:'bleed',statusAmount:3,label:'4 + 출혈 3'}]},
-  forgottenPriest:{id:'forgottenPriest',name:'Forgotten Priest',maxHp:42,symbol:'☥',gold:22,actions:[{kind:'defend',amount:8,label:'방어 8'},{kind:'buff',status:'strength',amount:2,label:'힘 +2'},{kind:'attackStatus',amount:8,status:'weak',statusAmount:1,label:'8 + 약화'},{kind:'attackStatus',amount:3,status:'poison',statusAmount:2,label:'3 + 중독 2'}]},
-  executioner:{id:'executioner',name:'The Executioner',maxHp:62,symbol:'⚒',gold:45,elite:true,actions:[{kind:'attack',amount:10,label:'처형 10'},{kind:'defend',amount:10,label:'철갑 10'},{kind:'attackStatus',amount:15,status:'vulnerable',statusAmount:2,label:'15 + 취약 2'},{kind:'attack',amount:18,label:'대절단 18'}]}
+  hollow:{id:'hollow',name:'공허한 자',maxHp:34,symbol:'☠',gold:15,actions:[{kind:'attack',amount:7,label:'공격 7'},{kind:'defend',amount:6,label:'방어 6'},{kind:'attack',amount:9,label:'공격 9'}]},
+  bloodLeech:{id:'bloodLeech',name:'피의 거머리',maxHp:30,symbol:'🩸',gold:18,actions:[{kind:'attack',amount:5,label:'공격 5'},{kind:'attack',amount:6,label:'공격 6'},{kind:'attack',amount:4,label:'공격 4'}]},
+  forgottenPriest:{id:'forgottenPriest',name:'잊힌 사제',maxHp:42,symbol:'☥',gold:22,actions:[{kind:'defend',amount:8,label:'방어 8'},{kind:'buff',status:'strength',amount:2,label:'힘 +2'},{kind:'attackStatus',amount:8,status:'weak',statusAmount:1,label:'8 + 약화'},{kind:'attackStatus',amount:3,status:'poison',statusAmount:2,label:'3 + 중독 2'}]},
+  executioner:{id:'executioner',name:'처형인',maxHp:62,symbol:'⚒',gold:45,elite:true,actions:[{kind:'attack',amount:10,label:'처형 10'},{kind:'defend',amount:10,label:'철갑 10'},{kind:'attackStatus',amount:15,status:'vulnerable',statusAmount:2,label:'15 + 취약 2'},{kind:'attack',amount:18,label:'대절단 18'}]}
 };
 
+const ENCOUNTERS = [
+  {id:'hollowPair',enemyIds:['hollow','hollow']},
+  {id:'hollowLeech',enemyIds:['hollow','bloodLeech']},
+  {id:'leechPair',enemyIds:['bloodLeech','bloodLeech']},
+  {id:'priestHollow',enemyIds:['forgottenPriest','hollow']}
+];
+
 const BOSSES = {
-  bloodboundSaint:{id:'bloodboundSaint',name:'The Bloodbound Saint',maxHp:110,symbol:'✠',gold:90,phases:[
-    {threshold:1,actions:[{kind:'attack',amount:12,label:'성혈의 일격 12'},{kind:'defend',amount:10,label:'성혈 방벽 10'},{kind:'attackStatus',amount:8,status:'bleed',statusAmount:2,label:'8 + 출혈 2'}]},
+  bloodboundSaint:{id:'bloodboundSaint',name:'피에 묶인 성자',maxHp:110,symbol:'✠',gold:90,phases:[
+    {threshold:1,actions:[{kind:'attack',amount:12,label:'성혈의 일격 12'},{kind:'defend',amount:10,label:'성혈 방벽 10'},{kind:'attack',amount:8,label:'공격 8'}]},
     {threshold:.5,actions:[{kind:'attack',amount:20,label:'붉은 심판 20'},{kind:'buff',status:'strength',amount:2,label:'힘 +2'},{kind:'attackStatus',amount:14,status:'vulnerable',statusAmount:2,label:'14 + 취약 2'},{kind:'attack',amount:10,label:'광휘 없는 참회 10'}]}
   ],phase2Message:'성자는 자신의 가슴을 찢어 심장을 꺼냈다. 피비린내가 성당을 가득 채운다.'}
 };
 
-const EVENTS = {
+const 이벤트S = {
+  upgradeShrine:{id:'upgradeShrine',title:'강화 성소',text:'검은 돌로 된 성소 위에 오래된 망치가 놓여 있다. 안쪽에서 희미한 열기가 새어 나온다.',choices:[
+    {label:'기도한다',text:'덱의 무작위 카드 1장이 강화된다.',effect:{type:'upgradeRandom'}},{label:'떠난다',text:'아무 일도 일어나지 않았다.'}
+  ]},
+  purifier:{id:'purifier',title:'정화 성소',text:'희미한 빛이 덱에 스며든다. 불필요한 한 장을 버릴 수 있다.',choices:[
+    {label:'정화한다',text:'기본 카드를 제외한 무작위 카드 1장이 사라진다.',effect:{type:'removeRandom'}},{label:'떠난다',text:'아무 일도 일어나지 않았다.'}
+  ]},
+  goldenShrine:{id:'goldenShrine',title:'황금 성소',text:'고대의 영혼을 기리는 금빛 성소가 어둠 속에 서 있다.',choices:[
+    {label:'기도한다',text:'골드 100을 얻는다.',effect:{type:'gainGold',amount:100}},
+    {label:'신성 모독',text:'골드 275를 얻지만 저주 카드 후회를 덱에 넣는다.',effect:{type:'gainGold',amount:275},reward:{gold:0},curse:true}
+  ]},
+  faceTrader:{id:'faceTrader',title:'얼굴 상인',text:'얼굴을 가린 기괴한 상인이 당신에게 손을 내민다. 거래할 것인가?',choices:[
+    {label:'얼굴을 만진다',text:'최대 체력의 일부를 잃고 골드 75를 얻는다.',effect:{type:'loseHp',amount:8},reward:{gold:75}},
+    {label:'거래한다',text:'무작위 유물을 하나 얻는다.',effect:{type:'gainRelic',id:'oldBell'}},
+    {label:'떠난다',text:'아무 일도 일어나지 않았다.'}
+  ]},
+  designer:{id:'designer',title:'탑-클래스 디자이너',text:'기묘한 옷을 입은 남자가 길을 막는다. 그의 서비스에는 대가가 따른다.',choices:[
+    {label:'교정',text:'골드 40을 내고 무작위 카드 하나를 강화한다.',cost:40,effect:{type:'upgradeRandom'}},
+    {label:'정리정돈',text:'골드 60을 내고 무작위 비기본 카드 하나를 제거한다.',cost:60,effect:{type:'removeRandom'}},
+    {label:'때린다',text:'체력 5를 잃는다.',effect:{type:'loseHp',amount:5}}
+  ]},
+  wheel:{id:'wheel',title:'변화의 돌림판',text:'그렘린이 녹슨 돌림판을 내민다. 결과는 당신의 손을 떠났다.',choices:[
+    {label:'돌린다',text:'체력, 골드, 유물, 카드 제거 중 하나가 무작위로 발생한다.',effect:{type:'wheel'}},{label:'떠난다',text:'돌림판을 외면한다.'}
+  ]},
   ruinedChapel:{id:'ruinedChapel',title:'무너진 성당',text:'촛불 하나가 아직 꺼지지 않았다. 오래된 기도문이 피처럼 번져 있다.',choices:[
-    {label:'촛불을 꺼뜨린다',text:'어둠이 내려앉았다. 대신 주머니에서 동전이 발견된다.',effect:{type:'loseHp',amount:5},reward:{gold:25}},
-    {label:'기도한다',text:'기도가 응답했다기보다, 당신 안의 무언가가 깨어난 느낌이다.',effect:{type:'randomBlessing'}},
-    {label:'무시한다',text:'아무 일도 일어나지 않았다.',effect:{type:'noop'}}
-  ]},
-  bloodOath:{id:'bloodOath',title:'피로 쓴 맹세',text:'쇠사슬에 묶인 석판에 한 문장이 새겨져 있다. "힘은 반드시 값을 요구한다."',choices:[
-    {label:'피를 바친다',text:'대가를 치렀지만 힘이 솟는다.',effect:{type:'loseHp',amount:8},reward:{tempStrength:2}},
-    {label:'석판을 부순다',text:'파편 하나가 기이하게 빛난다.',reward:{relic:'ironThimble'}},
-    {label:'돌아선다',text:'침묵이 답이 되었다.',effect:{type:'noop'}}
-  ]},
-  whisperingVeil:{id:'whisperingVeil',title:'속삭이는 장막',text:'안개 속에서 수많은 목소리가 당신의 이름을 부른다.',choices:[
-    {label:'안개 속으로 들어간다',text:'독한 연기 속에서 보이지 않는 무언가와 거래했다.',effect:{type:'gainCard',card:'bloodSpear'},reward:{gold:10}},
-    {label:'숨을 참는다',text:'죽지는 않았지만 기운이 빠졌다.',effect:{type:'loseHp',amount:3},reward:{gold:20}},
-    {label:'도망친다',text:'뒤도 보지 않고 달렸다.',reward:{gold:5}}
+    {label:'촛불을 꺼뜨린다',text:'체력 5를 잃고 골드 25를 얻는다.',effect:{type:'loseHp',amount:5},reward:{gold:25}},
+    {label:'기도한다',text:'기이한 축복이 찾아온다.',effect:{type:'randomBlessing'}},
+    {label:'무시한다',text:'아무 일도 일어나지 않았다.'}
   ]}
 };
 
 const NODE_INFO={combat:{label:'전투',icon:'⚔'},elite:{label:'엘리트',icon:'☠'},event:{label:'이벤트',icon:'?'},shop:{label:'상점',icon:'♜'},rest:{label:'휴식',icon:'♨'},treasure:{label:'보물',icon:'◆'},boss:{label:'보스',icon:'✠'}};
+const CARD_TYPE_LABELS={attack:'공격',skill:'스킬',power:'능력',curse:'저주',status:'상태'};
+const CARD_RARITY_LABELS={basic:'기본',common:'일반',uncommon:'희귀',rare:'희귀',special:'특별',curse:'저주',status:'상태',starter:'시작'};
 
-const AudioManager={ctx:null,enabled:true,ensure(){if(this.ctx||!this.enabled)return;try{this.ctx=new (window.AudioContext||window.webkitAudioContext)()}catch{this.enabled=false}},beep(freq=220,duration=.08,type='sine',gain=.04){this.ensure();if(!this.ctx)return;const o=this.ctx.createOscillator(),g=this.ctx.createGain();o.type=type;o.frequency.value=freq;g.gain.value=gain;o.connect(g);g.connect(this.ctx.destination);o.start();g.gain.exponentialRampToValueAtTime(.0001,this.ctx.currentTime+duration);o.stop(this.ctx.currentTime+duration)},playSFX(name){if(!this.enabled)return;const map={card:[320,.07,'triangle',.045],hit:[85,.11,'sawtooth',.06],enemyDeath:[55,.22,'square',.05],button:[180,.05,'sine',.035],heal:[480,.13,'sine',.04],error:[110,.08,'square',.03]};const p=map[name]||map.button;this.beep(...p)},playBGM(){/* reserved for future assets */}};
+const AudioManager={
+  ctx:null,enabled:true,master:.42,
+  ensure(){if(this.ctx||!this.enabled)return;try{this.ctx=new (window.AudioContext||window.webkitAudioContext)()}catch{this.enabled=false}},
+  tone(freq=220,duration=.08,type='sine',gain=.04,when=0){this.ensure();if(!this.ctx)return;const t=this.ctx.currentTime+when,o=this.ctx.createOscillator(),g=this.ctx.createGain();o.type=type;o.frequency.value=freq;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(Math.max(.0001,gain*this.master),t+.008);g.gain.exponentialRampToValueAtTime(.0001,t+duration);o.connect(g);g.connect(this.ctx.destination);o.start(t);o.stop(t+duration+.01)},
+  noise(duration=.08,gain=.03,when=0,filterFreq=1200){this.ensure();if(!this.ctx)return;const t=this.ctx.currentTime+when,b=this.ctx.createBuffer(1,Math.floor(this.ctx.sampleRate*duration),this.ctx.sampleRate),d=b.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;const src=this.ctx.createBufferSource(),f=this.ctx.createBiquadFilter(),g=this.ctx.createGain();src.buffer=b;f.type='lowpass';f.frequency.value=filterFreq;g.gain.setValueAtTime(gain*this.master,t);g.gain.exponentialRampToValueAtTime(.0001,t+duration);src.connect(f);f.connect(g);g.connect(this.ctx.destination);src.start(t);src.stop(t+duration+.01)},
+  playSFX(name){if(!this.enabled)return;this.ensure();if(!this.ctx)return;switch(name){case'button':this.tone(230,.045,'sine',.04);this.tone(330,.045,'sine',.025,.025);break;case'card':this.tone(360,.055,'triangle',.065);this.tone(520,.09,'triangle',.035,.035);this.noise(.045,.018,.01,2200);break;case'cardSkill':this.tone(250,.07,'sine',.05);this.tone(390,.11,'sine',.04,.035);break;case'cardPower':this.tone(180,.1,'sine',.045);this.tone(520,.18,'triangle',.04,.05);break;case'hit':this.noise(.09,.065,0,850);this.tone(92,.11,'sawtooth',.045);break;case'heavyHit':this.noise(.13,.09,0,620);this.tone(65,.17,'square',.05);break;case'block':this.tone(190,.08,'triangle',.04);this.tone(285,.1,'triangle',.03,.05);break;case'status':this.tone(540,.07,'sine',.03);this.tone(760,.11,'sine',.025,.055);break;case'heal':this.tone(340,.09,'sine',.035);this.tone(520,.13,'sine',.03,.07);this.tone(690,.17,'sine',.022,.14);break;case'draw':this.tone(300,.05,'triangle',.03);break;case'enemyTurn':this.tone(140,.12,'sawtooth',.035);this.tone(105,.16,'sawtooth',.025,.08);break;case'enemyDeath':this.noise(.18,.08,0,450);this.tone(56,.3,'square',.055);this.tone(42,.35,'square',.035,.06);break;case'phase':this.tone(160,.13,'sawtooth',.05);this.tone(330,.22,'triangle',.04,.12);this.tone(220,.28,'sine',.03,.2);break;case'win':this.tone(330,.12,'sine',.04);this.tone(440,.16,'sine',.04,.12);this.tone(660,.24,'triangle',.035,.26);break;case'error':this.tone(110,.09,'square',.04);this.tone(80,.13,'square',.03,.07);break;default:this.tone(220,.05,'sine',.03);}},
+  playBGM(){/* Reserved: no external assets in v1.0.0 */}
+};
 
 const Utils={
   rand(arr){return arr[Math.floor(Math.random()*arr.length)]}, chance(p){return Math.random()<p}, clamp(n,a,b){return Math.max(a,Math.min(b,n))}, uid(){return Math.random().toString(36).slice(2,9)}, deepClone(x){return JSON.parse(JSON.stringify(x))}, shuffle(a){let b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b}
 };
 
+const BUILD_VERSION=13;
+
 const Game={
-  version:1,
+  version:13,
   state:null,
   init(){this.state=this.newGame();this.load();this.render();},
   newGame(){return {screen:'menu',characterId:null,player:null,gold:0,deck:[],relics:[],map:null,currentNodeId:null,visitedNodes:[],battle:null,reward:null,event:null,runLog:[],stats:{turn:0,kills:0,nodes:0},shopInventory:null}},
-  startCharacter(id){const c=CHARACTERS[id];this.state={...this.newGame(),screen:'map',characterId:id,gold:70,deck:[...c.startDeck],relics:[...c.startRelics],player:{hp:c.maxHp,maxHp:c.maxHp,maxEnergy:c.maxEnergy,energy:c.maxEnergy,block:0,statuses:{},tempStrength:0},map:MapSystem.createMap(),currentNodeId:null,visitedNodes:[],stats:{turn:0,kills:0,nodes:0}};this.save();this.render();},
+  startCharacter(id){
+    const c=CHARACTERS[id];
+    if(!c){this.toast('캐릭터 데이터를 찾을 수 없습니다.');return;}
+    const starterDeck=(c.startDeck||[]).map(cardId=>CardSystem.createCard(cardId));
+    this.state={...this.newGame(),screen:'map',characterId:id,gold:70,deck:starterDeck,relics:[...(c.startRelics||[])],player:{hp:c.maxHp,maxHp:c.maxHp,maxEnergy:c.maxEnergy,energy:c.maxEnergy,block:0,statuses:{},tempStrength:0},map:MapSystem.createMap(),currentNodeId:null,visitedNodes:[],stats:{turn:0,kills:0,nodes:0}};
+    this.save();this.render();
+  },
   save(){try{localStorage.setItem('ashen-oath-save',JSON.stringify(this.state))}catch{}},
-  load(){try{const raw=localStorage.getItem('ashen-oath-save');if(raw){const s=JSON.parse(raw);if(s&&s.version===this.version){
-      this.state=s;
-      if(this.state.map && !this.state.map.nodes.some(n=>n.id==='f1a')){
-        this.state.map=MapSystem.createMap();
-        this.state.currentNodeId=null;
-        this.state.visitedNodes=[];
-        this.state.screen='map';
-      }
-      if(!this.state.screen)this.state.screen='menu';
-    }}}catch{}},
+  load(){try{const raw=localStorage.getItem('ashen-oath-save');if(!raw)return;const loaded=JSON.parse(raw);if(!loaded||loaded.version!==this.version){localStorage.removeItem('ashen-oath-save');return;}this.state=loaded;if(Array.isArray(this.state.deck))this.state.deck=this.state.deck.map(card=>CardSystem.normalize(card)).filter(Boolean);if(!this.state.screen)this.state.screen='menu';}catch{localStorage.removeItem('ashen-oath-save');}},
   deleteSave(){localStorage.removeItem('ashen-oath-save');this.state=this.newGame();this.render();},
   setScreen(screen){this.state.screen=screen;this.save();this.render();},
-  toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');clearTimeout(this._toast);this._toast=setTimeout(()=>el.classList.remove('show'),1300)},
-  render(){document.getElementById('app').innerHTML=UI.renderApp(this.state);UI.bind();}
+  toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');clearTimeout(this._toast);this._toast=setTimeout(()=>el.classList.remove('show'),1300)},showFatalError(msg){this.state.screen='error';this.state.errorMessage=String(msg||'알 수 없는 오류');this.render()},
+  render(){document.getElementById('app').innerHTML=UI.renderApp(this.state);UI.bind();UI.postRender();}
 };
 
 const Effects={
-  damage(amount){return {type:'damage',amount}}, block(amount){return {type:'block',amount}}, draw(amount){return {type:'draw',amount}}, gainEnergy(amount){return {type:'energy',amount}}, applyStatus(status,amount,target='enemy',duration=null){return {type:'status',status,amount,target,duration}}, heal(amount){return {type:'heal',amount}}
+  damage(amount){return {type:'damage',amount}},
+  damageAll(amount){return {type:'damageAll',amount}},
+  damageHits(amount,hits){return {type:'damageHits',amount,hits}},
+  damageRandom(amount,hits){return {type:'damageRandom',amount,hits}},
+  block(amount){return {type:'block',amount}},
+  draw(amount){return {type:'draw',amount}},
+  gainEnergy(amount){return {type:'energy',amount}},
+  applyStatus(status,amount,target='enemy',duration=null){return {type:'status',status,amount,target,duration}},
+  applyStatusAll(status,amount){return {type:'statusAll',status,amount}},
+  heal(amount){return {type:'heal',amount}},
+  temporaryStrength(amount){return {type:'tempStrength',amount}},
+  doubleStrength(){return {type:'doubleStrength'}}
 };
 
 const MapSystem={
-  // 아래(시작) → 위(보스) 방향의 1 Act 맵
-  createMap(){return {nodes:[
-    {id:'start',type:'combat',label:'성당 외벽',next:['f1a','f1b']},
-    {id:'f1a',type:'combat',label:'핏빛 회랑',next:['f2a','f2b']},
-    {id:'f1b',type:'event',label:'무너진 예배당',next:['f2b','f2c']},
-    {id:'f2a',type:'rest',label:'재의 화로',next:['f3a']},
-    {id:'f2b',type:'combat',label:'매장지의 순찰자',next:['f3a','f3b']},
-    {id:'f2c',type:'shop',label:'암흑 시장',next:['f3b']},
-    {id:'f3a',type:'combat',label:'침묵의 납골당',next:['f4a','f4b']},
-    {id:'f3b',type:'treasure',label:'봉인된 보물실',next:['f4b']},
-    {id:'f4a',type:'elite',label:'처형자의 제단',next:['boss']},
-    {id:'f4b',type:'event',label:'검은 성소',next:['boss']},
-    {id:'boss',type:'boss',label:'피의 성자',next:[]}
-  ]};},
-  getNode(id){return Game.state.map.nodes.find(n=>n.id===id)},
-  nextOptions(){
-    if(Game.state.currentNodeId==null){
-      const start=this.getNode('start');
-      return start?[start]:[];
+  // STS식 15층 Act 맵: 분기/합류, 중간 보물, 보스 직전 휴식.
+  createMap(){
+    const rows=15,cols=7,nodes=[];
+    // 7열 전체를 활용하고 층마다 배치를 바꿔 경로가 넓게 퍼지도록 구성.
+    const patterns=[[0,2,4,6],[1,3,5],[0,2,3,5,6],[1,3,5],[0,2,4,6]];
+    for(let r=0;r<rows;r++){
+      const cs=r===14?[3]:patterns[r%patterns.length];
+      cs.forEach(c=>{
+        let type='combat';
+        if(r===7) type='treasure';
+        else if(r===13) type='rest';
+        else if(r===14) type='boss';
+        else if(r<3) type=Utils.rand(['combat','combat','event']);
+        else if(r<10) type=Utils.rand(['combat','combat','event','shop','elite','rest']);
+        else type=Utils.rand(['combat','combat','event','shop','elite']);
+        if(r===1&&type==='elite')type='combat';
+        if(r===2&&type==='rest')type='combat';
+        nodes.push({id:`r${r}c${c}`,row:r,col:c,type,next:[]});
+      });
     }
-    const n=this.getNode(Game.state.currentNodeId);
-    return n?n.next.map(id=>this.getNode(id)).filter(Boolean):[];
+    for(let r=0;r<rows-1;r++){
+      const cur=nodes.filter(n=>n.row===r),nxt=nodes.filter(n=>n.row===r+1);
+      cur.forEach(n=>{
+        const candidates=nxt.filter(x=>Math.abs(x.col-n.col)<=2);
+        n.next=Utils.shuffle(candidates).slice(0,Math.min(candidates.length,Utils.rand([1,1,2]))).map(x=>x.id);
+      });
+      nxt.forEach(t=>{if(!cur.some(n=>n.next.includes(t.id))){const c=cur.filter(n=>Math.abs(n.col-t.col)<=2);(c.length?Utils.rand(c):Utils.rand(cur)).next.push(t.id);}});
+    }
+    nodes.filter(n=>n.row===13).forEach(n=>{n.type='rest';n.next=['r14c3']});
+    const labels={combat:'일반 전투',elite:'엘리트',event:'미지의 장소',shop:'상점',rest:'휴식처',treasure:'보물',boss:'보스'};
+    nodes.forEach(n=>n.label=labels[n.type]);
+    return {rows,cols,nodes,act:1};
+  },
+  getNode(id){return Game.state.map?.nodes.find(n=>n.id===id)},
+  nextOptions(){
+    if(Game.state.currentNodeId==null)return Game.state.map.nodes.filter(n=>n.row===0);
+    const n=this.getNode(Game.state.currentNodeId);return n?n.next.map(id=>this.getNode(id)).filter(Boolean):[];
   },
   enterNode(id){
-    const n=this.getNode(id); if(!n)return;
-    Game.state.currentNodeId=id;
-    if(!Game.state.visitedNodes.includes(id))Game.state.visitedNodes.push(id);
-    Game.state.stats.nodes++;
-    Game.save();
-    switch(n.type){
-      case'combat':case'elite':BattleSystem.start(n.type);break;
-      case'boss':BattleSystem.start('boss');break;
-      case'event':EventSystem.open();break;
-      case'shop':Game.setScreen('shop');break;
-      case'rest':Game.setScreen('rest');break;
-      case'treasure':RewardSystem.openTreasure();break;
-    }
+    const n=this.getNode(id);if(!n||!this.nextOptions().some(x=>x.id===id))return;
+    Game.state.currentNodeId=id;if(!Game.state.visitedNodes.includes(id))Game.state.visitedNodes.push(id);Game.state.stats.nodes++;Game.save();
+    switch(n.type){case'combat':case'elite':BattleSystem.start(n.type);break;case'boss':BattleSystem.start('boss');break;case'event':EventSystem.open();break;case'shop':Game.setScreen('shop');break;case'rest':Game.setScreen('rest');break;case'treasure':RewardSystem.openTreasure();break;}
   }
 };
 
 const CardSystem={
-  getDef(id){return CARDS[id]},
-  createCard(id,upgraded=false){const d=this.getDef(id);return {instanceId:Utils.uid(),id,upgraded}},
-  label(card){const d=this.getDef(card.id);return card.upgraded&&d.upgrade?d.upgrade.name:d.name},
-  data(card){const d=this.getDef(card.id);return card.upgraded&&d.upgrade?{...d,...d.upgrade,name:d.upgrade.name,description:d.upgrade.description,effects:d.upgrade.effects}:d},
-  canPlay(card,battle){const d=this.data(card);return battle.player.energy>=d.cost&&!battle.animating&&!battle.enemy.dead},
+  getDef(id){return id?CARDS[id]:null},
+  createCard(id,upgraded=false){
+    if(!CARDS[id])throw new Error('존재하지 않는 카드 ID: '+id);
+    return {instanceId:Utils.uid(),id,upgraded};
+  },
+  normalize(card){
+    if(typeof card==='string')return this.createCard(card);
+    if(card&&typeof card==='object'&&CARDS[card.id])return {instanceId:card.instanceId||Utils.uid(),id:card.id,upgraded:!!card.upgraded};
+    return null;
+  },
+  label(card){const d=this.getDef(card?.id);return d?(card.upgraded&&d.upgrade?d.upgrade.name:d.name):'알 수 없는 카드';},
+  data(card){
+    const d=this.getDef(card?.id);if(!d)return null;
+    return card.upgraded&&d.upgrade
+      ? {...d,...d.upgrade,name:d.upgrade.name,description:d.upgrade.description,effects:d.upgrade.effects}
+      : d;
+  },
+  cost(card,battle){
+    const d=this.data(card);if(!d)return 99;
+    if(d.type==='skill'&&battle?.player?.statuses?.corruption)return 0;
+    return d.cost;
+  },
+  canPlay(card,battle){
+    const d=this.data(card);if(!d||d.cost>=99||!battle)return false;
+    const alive=(battle.enemies||[]).some(e=>!e.dead&&e.hp>0);
+    if(!alive||battle.animating)return false;
+    const cost=this.cost(card,battle);
+    if(battle.player.energy<cost)return false;
+    if(d.condition==='allAttacks'&&!battle.hand.filter(Boolean).every(c=>CardSystem.data(c)?.type==='attack'))return false;
+    return true;
+  },
   play(index){BattleSystem.playCard(index)},
-  upgradeCard(instanceId){const c=Game.state.deck.find(x=>x.instanceId===instanceId);if(!c||c.upgraded||!CARDS[c.id].upgrade)return false;c.upgraded=true;return true;},
-  randomRewards(count=3){const ids=Object.keys(CARDS).filter(id=>CARDS[id].rarity!=='basic');return Utils.shuffle(ids).slice(0,count).map(id=>this.createCard(id))}
+  upgradeCard(instanceId){const c=Game.state.deck.find(x=>x.instanceId===instanceId);if(!c||c.upgraded||!CARDS[c.id]?.upgrade)return false;c.upgraded=true;return true;},
+  randomRewards(count=3){
+    const ids=Object.keys(CARDS).filter(id=>!['basic','curse','status'].includes(CARDS[id].rarity));
+    return Utils.shuffle(ids).slice(0,count).map(id=>this.createCard(id));
+  }
 };
 
 const BattleSystem={
   start(kind){
-    let enemyDef;if(kind==='boss')enemyDef=BOSSES.bloodboundSaint;else if(kind==='elite')enemyDef=ENEMIES.executioner;else enemyDef=ENEMIES[Utils.rand(['hollow','bloodLeech','forgottenPriest'])];
-    const p=Game.state.player; p.energy=p.maxEnergy;p.block=0;p.tempStrength=0;p.statuses=p.statuses||{};
-    this.state={turn:1,kind,enemy:{id:enemyDef.id,name:enemyDef.name,maxHp:enemyDef.maxHp,hp:enemyDef.maxHp,block:0,statuses:{},actionIndex:0,dead:false,phase:1},drawPile:Utils.shuffle(Game.state.deck.map(c=>({...c}))),hand:[],discard:[],exhaust:[],player:Utils.deepClone(p),animating:false,log:[]};
-    Game.state.player=this.state.player; Game.state.battle=this.state; Game.state.screen='battle';
-    this.hooks('onBattleStart'); this.startPlayerTurn(true); Game.save(); Game.render();
+    let defs=[];
+    if(kind==='boss') defs=[BOSSES.bloodboundSaint];
+    else if(kind==='elite') defs=[ENEMIES.executioner];
+    else {
+      const encounter=Utils.rand(ENCOUNTERS);
+      defs=encounter.enemyIds.map(id=>ENEMIES[id]).filter(Boolean);
+    }
+    if(!defs.length){Game.showFatalError('적 데이터를 찾을 수 없습니다.');return;}
+    const normalizedDeck=(Game.state.deck||[]).map(card=>CardSystem.normalize(card)).filter(Boolean);
+    if(!normalizedDeck.length){Game.showFatalError('전투에 사용할 카드가 없습니다.');return;}
+    Game.state.deck=normalizedDeck;
+    const saved=Game.state.player||{};
+    const p={hp:saved.hp,maxHp:saved.maxHp,baseMaxEnergy:saved.baseMaxEnergy||saved.maxEnergy||3,maxEnergy:saved.baseMaxEnergy||saved.maxEnergy||3,energy:saved.baseMaxEnergy||saved.maxEnergy||3,block:0,statuses:{},tempStrength:0};
+    const enemies=defs.map((d,i)=>({id:d.id,name:d.name,maxHp:d.maxHp,hp:d.maxHp,block:0,statuses:{},actionIndex:0,dead:false,phase:1,intent:null,symbol:d.symbol,gold:d.gold||0,slot:i}));
+    this.state={turn:1,kind,enemies,targetIndex:0,drawPile:Utils.shuffle(normalizedDeck.map(c=>({...c}))),hand:[],discard:[],exhaust:[],player:p,animating:false,log:['전투가 시작되었다.'],banner:'전투 시작',fx:{type:'card',floats:[]}};
+    Game.state.battle=this.state;Game.state.player=this.persistPlayer(p);Game.state.screen='battle';
+    this.hooks('onBattleStart');this.startPlayerTurn(true);Game.save();Game.render();
   },
-  sync(){Game.state.player=this.state.player;Game.state.battle=this.state},
-  log(msg){this.state.log.unshift(msg);this.state.log=this.state.log.slice(0,35)},
+  persistPlayer(p){return {hp:p.hp,maxHp:p.maxHp,baseMaxEnergy:p.baseMaxEnergy||p.maxEnergy,maxEnergy:p.baseMaxEnergy||p.maxEnergy,energy:p.baseMaxEnergy||p.maxEnergy,block:0,statuses:{},tempStrength:0}},
+  sync(){Game.state.battle=this.state;Game.state.player=this.persistPlayer(this.state.player)},
+  log(msg){this.state.log.unshift(msg);this.state.log=this.state.log.slice(0,14);this.state.banner=msg},
+  aliveEnemies(){return this.state.enemies.filter(e=>!e.dead&&e.hp>0)},
+  selectedEnemy(){const alive=this.aliveEnemies();if(!alive.length)return null;const selected=this.state.enemies[this.state.targetIndex];if(selected&&!selected.dead&&selected.hp>0)return selected;this.state.targetIndex=this.state.enemies.indexOf(alive[0]);return alive[0]},
+  selectTarget(index){const e=this.state.enemies[index];if(!e||e.dead||e.hp<=0)return;this.state.targetIndex=index;this.state.banner=e.name+' 선택';Game.render()},
   hooks(name,extra={}){for(const rid of Game.state.relics){const r=RELICS[rid];for(const e of (r.hooks?.[name]||[]))this.resolveEffect(e,{source:'relic',extra})}},
-  startPlayerTurn(first=false){if(!first){this.state.turn++;this.processStatuses('player');this.state.player.energy=this.state.player.maxEnergy;this.state.player.block=0;this.hooks('onTurnStart');}this.draw(5);this.chooseEnemyIntent();this.sync();Game.render();},
-  draw(count){for(let i=0;i<count;i++){if(!this.state.drawPile.length){if(!this.state.discard.length)break;this.state.drawPile=Utils.shuffle(this.state.discard.splice(0).map(c=>({...c})))}this.state.hand.push(this.state.drawPile.pop())}},
-  discardHand(){this.state.discard.push(...this.state.hand.splice(0))},
-  chooseEnemyIntent(){const e=this.state.enemy; if(this.state.kind==='boss')this.bossPhase();const d=BOSSES[e.id]||ENEMIES[e.id];let actions=d.actions||d.phases[e.phase-1].actions; if(d.phases)actions=d.phases[e.phase-1].actions; const action=actions[e.actionIndex%actions.length];e.intent=Utils.deepClone(action);e.actionIndex++},
-  bossPhase(){const e=this.state.enemy,d=BOSSES[e.id];if(!d?.phases)return;const newPhase=e.hp<=e.maxHp*d.phases[1].threshold?2:1;if(newPhase!==e.phase){e.phase=newPhase;this.log(d.phase2Message);this.floatText('PHASE II');AudioManager.playSFX('hit');}},
-  playCard(index){const card=this.state.hand[index];if(!card)return;const d=CardSystem.data(card);if(!CardSystem.canPlay(card,this.state)){AudioManager.playSFX('error');return}this.state.hand.splice(index,1);this.state.player.energy-=d.cost;this.state.animating=true;AudioManager.playSFX('card');for(const e of d.effects)this.resolveEffect(e,{source:'card',card});if(!card.upgraded&&d.type==='attack'&&Utils.chance(.12)){this.state.player.statuses.strength=(this.state.player.statuses.strength||0)+0;}
-    if(card.upgraded||d.exhaust){this.state.exhaust.push(card)}else this.state.discard.push(card);this.hooks('onCardPlayed',{card});this.state.animating=false;this.sync();if(this.state.enemy.hp<=0){this.winBattle();return}Game.save();Game.render();},
-  resolveEffect(e,ctx={}){const p=this.state.player,en=this.state.enemy;switch(e.type){
-    case'damage':return this.dealDamage(e.amount,ctx);
-    case'damageConditional':return this.dealDamage(e.amount+(en.statuses[e.condition]?(e.bonus||0):0),ctx);
-    case'block':p.block+=(e.amount||0);break;
-    case'draw':this.draw(e.amount||1);break;
-    case'energy':p.energy=Utils.clamp(p.energy+(e.amount||0),0,p.maxEnergy+4);break;
-    case'heal':p.hp=Utils.clamp(p.hp+(e.amount||0),0,p.maxHp);break;
-    case'loseHp':p.hp=Math.max(0,p.hp-(e.amount||0));break;
-    case'loseMaxHp':p.maxHp=Math.max(1,p.maxHp-(e.amount||0));p.hp=Math.min(p.hp,p.maxHp);break;
-    case'status':this.applyStatus(e.target==='player'?p:en,e.status,e.amount,e.duration,e.permanent);break;
-    case'chanceDraw':if(Utils.chance(e.chance||0))this.draw(e.amount||1);break;
-    case'chanceBlock':if(Utils.chance(e.chance||0))p.block+=(e.amount||0);break;
-    case'setMaxEnergy':p.maxEnergy=e.amount; p.energy=p.maxEnergy;break;
-    case'gainCard':Game.state.deck.push(CardSystem.createCard(e.card));this.log('새 카드가 덱에 들어왔다: '+CARDS[e.card].name);break;
-    case'randomBlessing':if(Utils.chance(.5)){p.maxHp+=4;p.hp+=4;this.log('최대 체력이 4 증가했다.')}else{Game.state.gold+=20;this.log('동전 20개를 얻었다.')}break;
-  }this.floatingForEffect(e)} ,
-  applyStatus(target,status,amount,duration=null,permanent=false){if(!STATUS_EFFECTS[status])return;if(status==='strength'&&target===this.state.player&&permanent){target.statuses.strength=(target.statuses.strength||0)+amount;return}target.statuses[status]=(target.statuses[status]||0)+amount;if(duration)target.statuses[status+'Duration']=duration;},
-  dealDamage(base,ctx){const target=this.state.enemy;let amount=base;const ps=this.state.player.statuses.weak||0;if(ctx.source==='card'&&ps)amount=Math.floor(amount*.75);if(ctx.source==='enemy'&&(target.statuses.vulnerable))amount=Math.floor(amount*1.5);const str=this.state.player.statuses.strength||0;if(ctx.source==='card')amount+=str+(this.state.player.tempStrength||0);amount=Math.max(0,Math.floor(amount));let absorbed=Math.min(target.block,amount);target.block-=absorbed;amount-=absorbed;target.hp=Math.max(0,target.hp-amount);if(amount>0)this.floatText('-'+amount);if(target.hp<=0){target.dead=true;AudioManager.playSFX('enemyDeath')}else{document.querySelector('.battle-scene')?.classList.add('shake');setTimeout(()=>document.querySelector('.battle-scene')?.classList.remove('shake'),300);AudioManager.playSFX('hit')}return amount;
+  startPlayerTurn(first=false){
+    if(!first){this.state.turn++;this.state.player.energy=this.state.player.maxEnergy;this.state.player.block=0;if(this.state.player.statuses.demonForm)this.state.player.statuses.strength=(this.state.player.statuses.strength||0)+this.state.player.statuses.demonForm;this.hooks('onTurnStart');}
+    this.state.fx={type:first?'card':'status',floats:[]};this.draw(5);this.chooseEnemyIntent();this.state.banner=first?'전투 시작':'플레이어 턴';this.sync();Game.render();
   },
-  enemyDealDamage(base){const p=this.state.player;let amount=base;const weak=p.statuses.weak||0;if(this.state.enemy.statuses.strength)amount+=this.state.enemy.statuses.strength;if(weak)amount=Math.floor(amount*.75);let absorbed=Math.min(p.block,amount);p.block-=absorbed;amount-=absorbed;p.hp=Math.max(0,p.hp-amount);if(amount>0)this.floatText('-'+amount);this.hooks('onDamageTaken');if(p.hp<=0){this.loseBattle()}},
-  enemyTurn(){const e=this.state.enemy,act=e.intent;if(!act)return;if(e.statuses.stun){this.log(e.name+'은 기절하여 행동하지 못했다.');delete e.statuses.stun;this.endEnemyTurn();return}switch(act.kind){case'attack':this.enemyDealDamage(act.amount);if(Game.state.screen==='lose')return;break;case'attackStatus':this.enemyDealDamage(act.amount);if(Game.state.screen==='lose')return;if(act.status)this.applyStatus(this.state.player,act.status,act.statusAmount);break;case'defend':e.block+=act.amount;break;case'buff':this.applyStatus(e,act.status,act.amount);break;}this.log(e.name+' : '+act.label);this.processStatuses('enemy');this.hooks('onEnemyDefeated');if(this.state.enemy.hp>0)this.startPlayerTurn();},
-  endTurn(){if(this.state.animating||this.state.enemy.dead)return;this.discardHand();this.processStatuses('player');this.hooks('onTurnEnd');this.state.hand=[];this.sync();this.enemyTurn();Game.save();},
-  processStatuses(who){const obj=who==='player'?this.state.player:this.state.enemy;const dotBleed=obj.statuses.bleed||0,dotPoison=obj.statuses.poison||0;if(dotBleed>0){if(who==='player'){obj.hp=Math.max(0,obj.hp-dotBleed)}else{obj.hp=Math.max(0,obj.hp-dotBleed)}obj.statuses.bleed=Math.max(0,dotBleed-1)}if(dotPoison>0){obj.hp=Math.max(0,obj.hp-dotPoison);obj.statuses.poison=Math.max(0,dotPoison-1)}for(const key of ['weak','vulnerable','stun']){if(obj.statuses[key]>0)obj.statuses[key]--} },
-  floatingForEffect(e){if(['damage','damageConditional'].includes(e.type))return; if(e.type==='block')this.floatText('+'+e.amount+' BLOCK'); if(e.type==='heal')this.floatText('+'+e.amount+' HP');if(e.type==='energy')this.floatText('+'+e.amount+' ENERGY')},
-  floatText(text){const scene=document.querySelector('.battle-scene');if(!scene)return;const x=document.createElement('div');x.className='floating-text';x.textContent=text;scene.appendChild(x);setTimeout(()=>x.remove(),850)},
-  winBattle(){this.state.player.block=0;this.state.enemy.dead=true;Game.state.player=this.state.player;Game.state.battle=null;Game.state.gold+=(ENEMIES[this.state.enemy.id]?.gold||BOSSES[this.state.enemy.id]?.gold||15);Game.state.stats.kills++;if(this.state.kind==='boss'){Game.state.screen='win';Game.save();Game.render();return}Game.state.reward={cards:CardSystem.randomRewards(3),gold:ENEMIES[this.state.enemy.id]?.gold||15};Game.state.screen='reward';Game.save();Game.render();},
-  loseBattle(){Game.state.player=this.state.player;Game.state.battle=null;Game.state.screen='lose';Game.save();Game.render()}
+  draw(count){
+    let drawn=0,reshuffled=false;
+    for(let i=0;i<count;i++){
+      if(this.state.hand.length>=10)break;
+      if(!this.state.drawPile.length){if(!this.state.discard.length)break;this.state.drawPile=Utils.shuffle(this.state.discard.splice(0).map(c=>({...c})));reshuffled=true;this.log('버린 카드가 다시 섞여 뽑기 더미가 되었다.');AudioManager.playSFX('draw')}
+      const card=this.state.drawPile.pop();if(card){this.state.hand.push(card);drawn++}
+    }
+    if(drawn>0){this.state.fx=this.state.fx||{type:'card',floats:[]};this.state.fx.drawCount=Math.max(this.state.fx.drawCount||0,drawn)}
+    if(reshuffled){this.state.fx=this.state.fx||{type:'card',floats:[]};this.state.fx.shuffle=true;AudioManager.playSFX('draw')}
+  },
+  discardHand(){this.state.discard.push(...this.state.hand.splice(0))},
+  chooseEnemyIntent(){
+    if(this.state.kind==='boss')this.bossPhase();
+    for(const e of this.state.enemies){
+      if(e.dead||e.hp<=0){e.intent=null;continue}
+      const d=BOSSES[e.id]||ENEMIES[e.id];
+      const actions=d?.phases?d.phases[e.phase-1]?.actions:d?.actions;
+      if(!actions?.length){e.intent=null;continue}
+      e.intent=Utils.deepClone(actions[e.actionIndex%actions.length]);e.actionIndex++;
+    }
+  },
+  bossPhase(){const e=this.state.enemies[0],d=BOSSES[e?.id];if(!d?.phases)return;const newPhase=e.hp<=e.maxHp*d.phases[1].threshold?2:1;if(newPhase!==e.phase){e.phase=newPhase;this.log(d.phase2Message);this.state.banner='단계 II';AudioManager.playSFX('phase') }},
+  playCard(index){
+    const card=this.state.hand[index];if(!card)return;const d=CardSystem.data(card);if(!d)return;
+    if(!CardSystem.canPlay(card,this.state)){AudioManager.playSFX('error');this.log('에너지가 부족하거나 지금은 카드를 사용할 수 없다.');Game.render();return}
+    const cost=CardSystem.cost(card,this.state);
+    this.state.hand.splice(index,1);this.state.player.energy-=cost;this.state.animating=true;this.state.banner=d.name+(card.upgraded?' +':'')+' 사용';this.state.fx={type:d.type==='attack'?'hit':d.type==='skill'?'block':'status',floats:[],playedCard:{name:d.name,type:d.type}};
+    AudioManager.playSFX(d.type==='power'?'cardPower':d.type==='skill'?'cardSkill':'card');
+    for(const e of d.effects||[])this.resolveEffect(e,{source:'card',card});
+    const shouldExhaust=!!d.exhaust||(this.state.player.statuses.corruption&&d.type==='skill');
+    if(shouldExhaust)this.state.exhaust.push(card);else this.state.discard.push(card);
+    this.hooks('onCardPlayed',{card});this.log(d.name+(card.upgraded?' +':'')+' 사용');this.state.animating=false;this.sync();
+    if(!this.aliveEnemies().length){this.winBattle();return}
+    Game.save();Game.render();
+  },
+  resolveEffect(e,ctx={}){
+    const p=this.state.player;
+    switch(e.type){
+      case'damage':return this.dealDamage(e.amount,ctx,this.selectedEnemy());
+      case'damageAll':return this.aliveEnemies().map(en=>this.dealDamage(e.amount,ctx,en));
+      case'damageHits':{for(let i=0;i<(e.hits||1);i++){const t=this.selectedEnemy();if(!t)break;this.dealDamage(e.amount,ctx,t)}break}
+      case'damageRandom':{for(let i=0;i<(e.hits||1);i++){const alive=this.aliveEnemies();if(!alive.length)break;this.dealDamage(e.amount,ctx,Utils.rand(alive))}break}
+      case'damageConditional':{const t=this.selectedEnemy();if(t)return this.dealDamage(e.amount+(t.statuses[e.condition]?(e.bonus||0):0),ctx,t);break}
+      case'perfectedStrike':{const count=(Game.state.deck||[]).filter(c=>CARDS[c.id]?.name?.includes('타격')).length;return this.dealDamage((e.base||0)+count*(e.perStrike||0),ctx,this.selectedEnemy())}
+      case'damageBlock':return this.dealDamage(p.block,ctx,this.selectedEnemy());
+      case'damageStrengthMult':{const str=p.statuses.strength||0;return this.dealDamage(e.amount+str*(e.multiplier||1),ctx,this.selectedEnemy())}
+      case'block':{const amount=e.amount||0;p.block+=amount;this.afterBlockGain(amount);break}
+      case'draw':this.draw(e.amount||1);break;
+      case'energy':p.energy=Math.min(p.energy+(e.amount||0),p.maxEnergy+4);break;
+      case'heal':p.hp=Utils.clamp(p.hp+(e.amount||0),0,p.maxHp);break;
+      case'loseHp':p.hp=Math.max(1,p.hp-(e.amount||0));break;
+      case'loseMaxHp':p.maxHp=Math.max(1,p.maxHp-(e.amount||0));p.hp=Math.min(p.hp,p.maxHp);break;
+      case'status':this.applyStatus(e.target==='player'?p:this.selectedEnemy(),e.status,e.amount,e.duration,e.permanent,e.temporary);break;
+      case'statusAll':for(const en of this.aliveEnemies())this.applyStatus(en,e.status,e.amount,e.duration,false,false);break;
+      case'tempStrength':this.applyStatus(p,'strength',e.amount,null,false,true);break;
+      case'doubleStrength':p.statuses.strength=(p.statuses.strength||0)*2;this.state.banner='힘이 2배가 되었다.';AudioManager.playSFX('status');break;
+      case'addDiscardCard':{const copy=CardSystem.createCard(e.card);this.state.discard.push(copy);const copyName=CARDS[e.card]?.name||e.card;this.log(copyName+'의 복사본 1장이 버린 카드 더미에 추가되었다.');this.state.banner=copyName+' 복사본 추가';AudioManager.playSFX('draw');break}
+      case'addToDraw':{const copy=CardSystem.createCard(e.card);this.state.drawPile.push(copy);this.state.drawPile=Utils.shuffle(this.state.drawPile);this.log((CARDS[e.card]?.name||e.card)+'이 뽑기 더미에 섞여 들어왔다.');break}
+      case'reclaimDiscard':{const c=this.state.discard.pop();if(c)this.state.drawPile.push(c);break}
+      case'exhaustRandomHand':{if(this.state.hand.length){const i=Math.floor(Math.random()*this.state.hand.length);this.state.exhaust.push(this.state.hand.splice(i,1)[0])}break}
+      case'chanceDraw':if(Utils.chance(e.chance||0))this.draw(e.amount||1);break;
+      case'chanceBlock':if(Utils.chance(e.chance||0)){p.block+=e.amount||0;this.afterBlockGain(e.amount||0)}break;
+      case'setMaxEnergy':p.maxEnergy=e.amount;p.energy=p.maxEnergy;break;
+      case'gainCard':Game.state.deck.push(CardSystem.createCard(e.card));this.log('새 카드가 덱에 들어왔다: '+CARDS[e.card].name);break;
+    }
+    this.floatingForEffect(e);
+  },
+  applyStatus(target,status,amount,duration=null,permanent=false,temporary=false){
+    if(!target||!STATUS_EFFECTS[status])return;
+    if(status==='strength'&&target===this.state.player){target.statuses.strength=(target.statuses.strength||0)+amount;if(temporary)target.tempStrength=(target.tempStrength||0)+amount;this.state.banner='힘 +'+amount;AudioManager.playSFX('status');return}
+    target.statuses[status]=(target.statuses[status]||0)+amount;
+    if(duration)target.statuses[status+'Duration']=duration;
+    this.state.banner=(target===this.state.player?'플레이어에게 ':'적에게 ')+STATUS_EFFECTS[status].label+' '+amount;AudioManager.playSFX('status');
+  },
+  dealDamage(base,ctx,target){
+    if(!target||target.dead||target.hp<=0)return 0;
+    let amount=base;
+    if(ctx.source==='card'){
+      const str=(this.state.player.statuses.strength||0);
+      amount+=str;
+      if(this.state.player.statuses.weak)amount=Math.floor(amount*.75);
+      if(target.statuses.vulnerable)amount=Math.floor(amount*1.5);
+    }
+    amount=Math.max(0,Math.floor(amount));
+    const absorbed=Math.min(target.block,amount);target.block-=absorbed;amount-=absorbed;target.hp=Math.max(0,target.hp-amount);
+    const idx=this.state.enemies.indexOf(target);const fxX=55+idx*12;if(absorbed)this.queueFloat('block-pop','-'+absorbed+' BLOCK',fxX,35);if(amount>0){this.queueFloat('damage-pop','-'+amount,fxX,34);AudioManager.playSFX(amount>=15?'heavyHit':'hit')}else AudioManager.playSFX('block');
+    if(target.hp<=0){target.dead=true;target.intent=null;target.block=0;this.state.banner=target.name+' 격파!';AudioManager.playSFX('enemyDeath');if(this.selectedEnemy()===null){const alive=this.aliveEnemies();if(alive.length)this.state.targetIndex=this.state.enemies.indexOf(alive[0])}}
+    else this.state.banner=amount?target.name+'에게 '+amount+' 피해':'공격이 방어도에 막혔다';
+    return amount;
+  },
+  afterBlockGain(amount){
+    if(amount<=0)return;
+    const stacks=this.state.player.statuses.juggernaut||0;
+    for(let i=0;i<stacks;i++){const alive=this.aliveEnemies();if(!alive.length)break;this.dealDamage(5,{source:'juggernaut'},Utils.rand(alive))}
+  },
+  enemyDealDamage(base,attacker){
+    const p=this.state.player;let amount=base;const weak=p.statuses.weak||0;const vulnerable=p.statuses.vulnerable||0;
+    if(attacker?.statuses?.strength)amount+=attacker.statuses.strength;if(weak)amount=Math.floor(amount*.75);if(vulnerable)amount=Math.floor(amount*1.5);amount=Math.max(0,Math.floor(amount));
+    const absorbed=Math.min(p.block,amount);p.block-=absorbed;amount-=absorbed;p.hp=Math.max(0,p.hp-amount);
+    if(absorbed)this.queueFloat('block-pop','-'+absorbed+' BLOCK',25,69);if(amount>0){this.queueFloat('damage-pop','-'+amount,25,66);AudioManager.playSFX(amount>=15?'heavyHit':'hit');this.state.banner='피해를 '+amount+' 받았다.'}else{AudioManager.playSFX('block');this.state.banner='공격이 방어도에 막혔다.'}
+    const fb=p.statuses.flameBarrier||0;if(fb&&attacker&&!attacker.dead){this.dealDamage(fb,{source:'flameBarrier'},attacker)}
+    this.hooks('onDamageTaken');if(p.hp<=0)this.loseBattle();
+  },
+  enemyTurn(){
+    const enemies=[...this.state.enemies.filter(e=>!e.dead&&e.hp>0)];
+    for(const e of enemies){
+      if(Game.state.screen==='lose')return;if(e.dead||e.hp<=0)continue;
+      const act=e.intent;if(!act)continue;AudioManager.playSFX('enemyTurn');this.state.banner='적의 행동: '+act.label;
+      if(e.statuses.stun){this.log(e.name+'은 기절하여 행동하지 못했다.');delete e.statuses.stun;this.processStatuses(e,'enemy');continue}
+      switch(act.kind){
+        case'attack':this.enemyDealDamage(act.amount,e);break;
+        case'attackStatus':this.enemyDealDamage(act.amount,e);if(Game.state.screen==='lose')return;if(act.status)this.applyStatus(this.state.player,act.status,act.statusAmount);break;
+        case'defend':{e.block+=act.amount;AudioManager.playSFX('block');this.state.banner=e.name+'이 방어도 '+act.amount+' 획득';break}
+        case'buff':this.applyStatus(e,act.status,act.amount);break;
+      }
+      this.log(e.name+' : '+act.label);this.processStatuses(e,'enemy');
+    }
+    if(this.aliveEnemies().length)this.startPlayerTurn();
+  },
+  endTurn(){
+    if(this.state.animating||!this.aliveEnemies().length)return;
+    this.log('턴 종료');
+    const regretCount=this.state.hand.filter(c=>c.id==='regret').length;
+    if(regretCount){this.state.player.hp=Math.max(1,this.state.player.hp-regretCount);this.log('후회로 인해 '+regretCount+' 피해를 받았다.');if(this.state.player.hp<=0){this.loseBattle();return}}
+    this.discardHand();this.processStatuses(this.state.player,'player');this.hooks('onTurnEnd');this.state.hand=[];this.sync();this.enemyTurn();Game.save();
+  },
+  processStatuses(obj,owner){
+    const poison=obj.statuses.poison||0;if(poison>0){obj.hp=Math.max(0,obj.hp-poison);obj.statuses.poison=Math.max(0,poison-1);if(poison>0)this.queueFloat('damage-pop','-'+poison,owner==='player'?25:55,owner==='player'?66:34)}
+    for(const key of ['weak','vulnerable']){if(obj.statuses[key]>0)obj.statuses[key]--}
+    if(owner==='player'&&obj.tempStrength){obj.statuses.strength=Math.max(0,(obj.statuses.strength||0)-obj.tempStrength);obj.tempStrength=0}
+  },
+  floatingForEffect(e){if(['damage','damageConditional','damageAll','damageHits','damageRandom','damageBlock','damageStrengthMult','perfectedStrike'].includes(e.type))return;if(e.type==='block'){this.queueFloat('block-pop','+'+e.amount+' BLOCK',24,68);AudioManager.playSFX('block');this.state.banner='방어도 +'+e.amount}if(e.type==='heal'){this.queueFloat('status-pop','+'+e.amount+' HP',18,68);AudioManager.playSFX('heal');this.state.banner='체력 +'+e.amount}if(e.type==='energy'){this.queueFloat('status-pop','+'+e.amount+' 에너지',80,86);AudioManager.playSFX('status');this.state.banner='에너지 +'+e.amount}},
+  queueFloat(cls,text,x,y){if(!this.state.fx)this.state.fx={type:'hit',floats:[]};if(!Array.isArray(this.state.fx.floats))this.state.fx.floats=[];this.state.fx.floats.push({cls,text,x,y})},
+  floatText(text){this.queueFloat('status-pop',text,50,45)},
+  winBattle(){
+    for(const e of this.state.enemies)e.block=0;
+    const defeated=this.state.enemies.slice();const kind=this.state.kind;const gold=defeated.reduce((sum,e)=>sum+(ENEMIES[e.id]?.gold||BOSSES[e.id]?.gold||e.gold||15),0);
+    const persistent=this.persistPlayer(this.state.player);persistent.hp=this.state.player.hp;Game.state.player=persistent;Game.state.battle=null;Game.state.gold+=gold;Game.state.stats.kills+=defeated.filter(e=>e.dead).length;
+    if(Game.state.relics.includes('burningBlood'))Game.state.player.hp=Math.min(Game.state.player.maxHp,Game.state.player.hp+6);
+    if(kind==='boss'){Game.state.screen='win';Game.save();Game.render();return}
+    Game.state.reward={cards:CardSystem.randomRewards(3),gold};Game.state.screen='reward';Game.save();Game.render();
+  },
+  loseBattle(){Game.state.player=this.persistPlayer(this.state.player);Game.state.battle=null;Game.state.screen='lose';Game.save();Game.render()}
 };
 
 const RewardSystem={
@@ -246,23 +977,50 @@ const RewardSystem={
 MapSystem.continueAfterNode=function(){Game.state.screen='map';Game.save();Game.render()};
 
 const EventSystem={
-  open(){const key=Utils.rand(Object.keys(EVENTS));Game.state.event=EVENTS[key];Game.state.screen='event';Game.save();Game.render()},
-  choose(choice){const e=Game.state.event;if(!e)return;BattleSystem.state=BattleSystem.state||null;if(choice.effect){const fake={...BattleSystem.state}; // effect application without requiring a battle
-      if(choice.effect.type==='loseHp'){Game.state.player.hp=Math.max(0,Game.state.player.hp-choice.effect.amount)}
-      if(choice.effect.type==='randomBlessing'){if(Utils.chance(.5)){Game.state.player.maxHp+=4;Game.state.player.hp+=4}else Game.state.gold+=20}
-      if(choice.effect.type==='gainCard')Game.state.deck.push(CardSystem.createCard(choice.effect.card));
-    }
+  open(){const key=Utils.rand(Object.keys(이벤트S));Game.state.event={...Utils.deepClone(이벤트S[key]),phase:'choice',resultText:'',resultTitle:'결과'};Game.state.screen='event';Game.save();Game.render();},
+  describeResult(choice,before){
+    const e=choice.effect||{};if(choice.result)return choice.result;
+    if(e.type==='loseHp')return `체력을 ${Math.max(0,before.hp-Game.state.player.hp)} 잃었다.`;
+    if(e.type==='gainGold')return `골드 ${Math.max(0,Game.state.gold-before.gold)}을 얻었다.`;
+    if(e.type==='gainCard')return `${CARDS[e.card]?.name||'카드'}를 덱에 추가했다.`;
+    if(e.type==='gainCurse'||choice.curse)return '저주 카드가 덱에 들어왔다.';
+    if(e.type==='healFull')return '체력이 모두 회복되었다.';
+    if(e.type==='gainRelic')return `${RELICS[e.id]?.name||'유물'}을 획득했다.`;
+    if(e.type==='upgradeRandom')return '무작위 카드 한 장이 강화되었다.';
+    if(e.type==='removeRandom')return '무작위 카드 한 장이 덱에서 사라졌다.';
+    if(e.type==='randomBlessing')return Game.state.player.maxHp>before.maxHp?'최대 체력이 4 증가하고 체력도 회복되었다.':'골드 20을 얻었다.';
+    if(e.type==='wheel')return '돌림판이 멈췄다. 예측할 수 없는 변화가 일어났다.';
+    if(choice.reward?.gold)return `골드 ${choice.reward.gold}을 얻었다.`;
+    return '아무 일도 일어나지 않았다.';
+  },
+  choose(choice){
+    const e=Game.state.event;if(!e||e.phase!=='choice')return;const eff=choice.effect||{};
+    if(choice.cost&&Game.state.gold<choice.cost)return Game.toast('골드가 부족합니다.');
+    const before={hp:Game.state.player.hp,maxHp:Game.state.player.maxHp,gold:Game.state.gold};
+    if(choice.cost)Game.state.gold-=choice.cost;
+    if(eff.type==='loseHp')Game.state.player.hp=Math.max(1,Game.state.player.hp-(eff.amount||0));
+    if(eff.type==='gainGold')Game.state.gold+=eff.amount||0;
+    if(eff.type==='randomBlessing'){if(Utils.chance(.5)){Game.state.player.maxHp+=4;Game.state.player.hp+=4}else Game.state.gold+=20}
+    if(eff.type==='gainCard'&&CARDS[eff.card])Game.state.deck.push(CardSystem.createCard(eff.card));
+    if(eff.type==='gainCurse'&&CARDS.regret)Game.state.deck.push(CardSystem.createCard('regret'));
+    if(eff.type==='upgradeRandom'){const pool=Game.state.deck.filter(c=>!c.upgraded&&CARDS[c.id]?.upgrade);if(pool.length)Utils.rand(pool).upgraded=true;}
+    if(eff.type==='removeRandom'){const pool=Game.state.deck.filter(c=>CARDS[c.id]?.rarity!=='basic');if(pool.length){const c=Utils.rand(pool);Game.state.deck=Game.state.deck.filter(x=>x.instanceId!==c.instanceId);}}
+    if(eff.type==='healFull')Game.state.player.hp=Game.state.player.maxHp;
+    if(eff.type==='gainRelic'&&RELICS[eff.id]&&!Game.state.relics.includes(eff.id))Game.state.relics.push(eff.id);
+    if(eff.type==='wheel'){const outcomes=[()=>Game.state.player.hp=Math.max(1,Game.state.player.hp-Math.max(1,Math.floor(Game.state.player.maxHp*.1))),()=>{const pool=Game.state.deck.filter(c=>CARDS[c.id]?.rarity!=='basic');if(pool.length)Game.state.deck.splice(Game.state.deck.indexOf(Utils.rand(pool)),1)},()=>Game.state.player.hp=Game.state.player.maxHp,()=>{const ids=Object.keys(RELICS).filter(id=>!Game.state.relics.includes(id)&&id!=='burningBlood');if(ids.length)Game.state.relics.push(Utils.rand(ids))},()=>Game.state.gold+=100];Utils.rand(outcomes)();}
     if(choice.reward?.gold)Game.state.gold+=choice.reward.gold;
-    if(choice.reward?.relic&&!Game.state.relics.includes(choice.reward.relic))Game.state.relics.push(choice.reward.relic);
+    if(choice.reward?.relic&&RELICS[choice.reward.relic]&&!Game.state.relics.includes(choice.reward.relic))Game.state.relics.push(choice.reward.relic);
     if(choice.reward?.tempStrength)Game.state.player.tempStrength=(Game.state.player.tempStrength||0)+choice.reward.tempStrength;
-    Game.state.event=null;MapSystem.continueAfterNode();
-  }
+    if(choice.curse&&CARDS.regret)Game.state.deck.push(CardSystem.createCard('regret'));
+    e.phase='result';e.chosenLabel=choice.label;e.resultText=this.describeResult(choice,before);e.resultTitle=choice.resultTitle||'결과';Game.state.event=e;Game.save();Game.render();
+  },
+  finish(){Game.state.event=null;MapSystem.continueAfterNode();}
 };
 
 const ShopSystem={
   inventory(){
     if(Game.state.shopInventory) return Game.state.shopInventory;
-    const ids=Utils.shuffle(Object.keys(CARDS).filter(id=>CARDS[id].rarity!=='basic')).slice(0,3);
+    const ids=Utils.shuffle(Object.keys(CARDS).filter(id=>!['basic','curse','status'].includes(CARDS[id].rarity))).slice(0,3);
     Game.state.shopInventory=ids.map(id=>({kind:'card',id,cost:35+(CARDS[id].rarity==='rare'?25:0)})).concat([{kind:'heal',cost:30},{kind:'remove',cost:60},{kind:'relic',id:'oldBell',cost:70}]);
     return Game.state.shopInventory;
   },
@@ -288,40 +1046,140 @@ const RestSystem={
 };
 
 const UI={
- renderApp(s){switch(s.screen){case'menu':return this.menu();case'character':return this.character();case'map':return this.map();case'battle':return this.battle();case'reward':return this.reward();case'rewardTreasure':return this.treasure();case'event':return this.event();case'shop':return this.shop();case'rest':return this.rest();case'removeCard':return this.removeCard();case'upgradeCard':return this.upgradeCard();case'win':return this.ending(true);case'lose':return this.ending(false);default:return this.menu()}},
- header(extra=''){return `<div class="topbar"><div class="brand">ASHEN OATH</div><div style="display:flex;gap:8px;align-items:center">${extra}<span class="pill">♥ ${Game.state.player?Game.state.player.hp+'/'+Game.state.player.maxHp:'—'}</span><span class="pill gold">◆ ${Game.state.gold||0}</span></div></div>`},
- menu(){const save=localStorage.getItem('ashen-oath-save');return `<div class="screen center"><div style="text-align:center"><div class="small" style="letter-spacing:5px">A DARK DECKBUILDING ROGUELIKE</div><h1 class="title">ASHEN OATH</h1><p class="subtitle">폐허가 된 성당의 가장 깊은 곳에서, 재와 피로 맹세를 새긴 사냥꾼의 여정이 시작된다.</p><div class="menu-actions" style="margin-top:24px"><button class="btn primary" data-action="new-run">새로운 맹세</button>${save?'<button class="btn" data-action="continue-run">이어서 하기</button>':''}<button class="btn" data-action="show-guide">콘텐츠 구조 보기</button></div><p class="small" style="margin-top:18px">HTML / CSS / Vanilla JavaScript · 외부 라이브러리 없음</p></div></div>`},
- character(){const chars=Object.values(CHARACTERS);return `<div class="screen">${this.header()}<div style="max-width:980px;width:100%;margin:auto"><h2>사냥꾼을 선택하라</h2><div class="grid grid-2">${chars.map((c,i)=>`<div class="panel character-card ${i===0?'selected':''}"><div class="character-art"><div class="silhouette"></div></div><h3>${c.name}</h3><p class="small">HP ${c.maxHp} · 에너지 ${c.maxEnergy}</p><p>${c.description}</p><div class="small">시작 유물: ${(c.startRelics||[]).map(r=>RELICS[r]?.name||r).join(', ')||'없음'}</div><div class="button-row" style="margin-top:10px"><button class="btn primary" data-action="start-character" data-id="${c.id}">이 캐릭터로 시작</button></div></div>`).join('')}</div><div class="button-row" style="margin-top:14px"><button class="btn" data-action="back-menu">뒤로</button></div></div></div>`},
- map(){const next=MapSystem.nextOptions();const nodes=Game.state.map.nodes;
-    // 화면 아래에서 위로 진행: 시작은 5행, 보스는 1행
-    const pos={start:[4,5],f1a:[2,4],f1b:[6,4],f2a:[1,3],f2b:[4,3],f2c:[7,3],f3a:[2,2],f3b:[6,2],f4a:[3,1],f4b:[5,1],boss:[4,0]};
-    const lines=nodes.map(n=>`<svg style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none">${n.next.map(id=>{const [x1,y1]=pos[n.id],[x2,y2]=pos[id];return `<line x1="${(x1-.5)*14.2}%" y1="${y1*20+8}%" x2="${(x2-.5)*14.2}%" y2="${y2*20+8}%" stroke="rgba(161,130,87,.22)" stroke-width="3"/>`}).join('')}</svg>`).join('');
-    return `<div class="screen">${this.header('<span class="pill">진행 '+Game.state.stats.nodes+'</span>')}<div class="panel pad"><div style="display:flex;justify-content:space-between;align-items:end;gap:10px"><div><h2 style="margin:.2rem 0">잿빛 성당의 길</h2><div class="small">아래에서 시작해 위로 올라간다. 최상단에는 단 하나의 보스가 기다린다.</div></div><button class="btn" data-action="open-deck">덱 / 유물</button></div></div>
-      <div class="map-wrap"><div class="map-grid" style="grid-template-rows:repeat(6,72px);min-height:520px">${lines}${nodes.map(n=>{const [x,y]=pos[n.id],visited=Game.state.visitedNodes.includes(n.id),available=next.some(q=>q.id===n.id),info=NODE_INFO[n.type];return `<div class="map-node ${visited?'done':''} ${available?'current':''}" style="grid-column:${x};grid-row:${y+1}"><button title="${info.label}" ${available?'data-action="map-node" data-id="'+n.id+'"':'aria-disabled="true"'}>${info.icon}</button><div class="label">${info.label}</div></div>`}).join('')}</div></div>
-      <div class="panel pad"><div class="small">진행 요약</div><div class="grid grid-4"><div class="stat"><span class="small">HP</span><b>${Game.state.player.hp}/${Game.state.player.maxHp}</b></div><div class="stat"><span class="small">골드</span><b>${Game.state.gold}</b></div><div class="stat"><span class="small">덱</span><b>${Game.state.deck.length}</b></div><div class="stat"><span class="small">유물</span><b>${Game.state.relics.length}</b></div></div></div></div>`},
- battle(){const b=Game.state.battle;if(!b)return '';const e=b.enemy,p=b.player;const statusHTML=(obj)=>Object.entries(obj.statuses||{}).filter(([k,v])=>typeof v==='number'&&v>0&&STATUS_EFFECTS[k]).map(([k,v])=>`<span class="status ${STATUS_EFFECTS[k].color}">${STATUS_EFFECTS[k].label} ${v}</span>`).join('');const intent=e.intent?`<div class="intent">${e.intent.kind.includes('attack')?'⚔':'✦'} ${e.intent.label}</div>`:'';const hand=b.hand.map((c,i)=>this.cardHTML(c,i)).join('');const enemyHpPct=Math.round(100*e.hp/e.maxHp);const playerHpPct=Math.round(100*p.hp/p.maxHp);return `<div class="screen">${this.header('<span class="pill">TURN '+b.turn+'</span>')}<div class="battle-layout"><div class="battle-main"><div class="battle-scene"><div class="fog"></div><div class="enemy-card"><div class="enemy-art"><div class="enemy-symbol ${b.kind==='boss'?'boss-symbol':''}">${e.symbol}</div></div><div style="margin-top:8px" class="enemy-name">${e.name} ${b.kind==='boss'?`<span class="tag">PHASE ${e.phase}</span>`:''}</div><div class="hpbar"><div class="hpfill" style="width:${enemyHpPct}%"></div></div><div class="small" style="margin-top:4px">${e.hp} / ${e.maxHp}</div>${e.block?`<div style="margin-top:6px"><span class="block-badge">🛡 ${e.block}</span></div>`:''}<div class="status-row">${statusHTML(e)}</div>${intent}</div></div><div class="player-bar"><div class="resource"><div class="small">HP</div><div class="value">${p.hp} / ${p.maxHp}</div><div class="hpbar"><div class="hpfill" style="width:${playerHpPct}%"></div></div></div><div class="resource" style="text-align:center"><div class="small">ENERGY</div><div class="value">${p.energy} / ${p.maxEnergy}</div>${p.block?`<span class="block-badge">🛡 ${p.block}</span>`:''}</div><div class="resource"><div class="small">상태</div><div class="status-row" style="justify-content:flex-start">${statusHTML(p)||'<span class="small">없음</span>'}</div></div></div><div class="hand-area"><div class="hand">${hand||'<div class="small">손패가 비어 있습니다.</div>'}</div><div class="battle-actions"><button class="btn danger" data-action="end-turn">턴 종료</button></div></div></div><aside class="panel pad"><div class="side-section"><h3 class="section-title">덱</h3><div class="draw-ui"><div class="pile" data-action="show-pile" data-pile="draw">DRAW<br><b>${b.drawPile.length}</b></div><div class="pile" data-action="show-pile" data-pile="discard">DISCARD<br><b>${b.discard.length}</b></div><div class="pile" data-action="show-pile" data-pile="exhaust">EXHAUST<br><b>${b.exhaust.length}</b></div><div class="pile">ENEMY<br><b>${e.actionIndex}</b></div></div></div><div class="side-section"><h3 class="section-title">유물</h3>${Game.state.relics.map(r=>`<div class="small" style="margin:6px 0"><span class="gold">◆ ${RELICS[r].name}</span><br>${RELICS[r].description}</div>`).join('')}</div><div class="side-section"><h3 class="section-title">전투 로그</h3><div class="log">${b.log.map(x=>`<div>${x}</div>`).join('')}</div></div></aside></div></div>`},
- cardHTML(c,i){const d=CardSystem.data(c);const can=CardSystem.canPlay(c,Game.state.battle);return `<div class="card ${d.type} ${can?'':'disabled'}" data-action="play-card" data-index="${i}"><div><div class="card-cost">${d.cost}</div><div class="card-name">${d.name}</div><div class="card-type">${d.type} · ${d.rarity}</div></div><div class="card-desc">${d.description}</div><div class="card-footer"><span>${c.upgraded?'UPGRADED':''}</span><span>#${i+1}</span></div></div>`},
- reward(){const r=Game.state.reward;return `<div class="screen center"><div style="max-width:1000px;width:100%"><div class="panel pad" style="text-align:center"><div class="small gold">VICTORY</div><h2 style="margin:.3em 0">전투에서 살아남았다</h2><p class="small">골드 ${r.gold}를 획득했다. 이제 하나를 고르거나 지나칠 수 있다.</p></div><div class="reward-grid" style="margin-top:14px">${r.cards.map((c,i)=>`<div class="panel content-card reward-card">${this.cardHTML(c,'r'+i).replace('data-action="play-card"','data-action="claim-reward"').replace(`data-index="r${i}"`,`data-card="${c.instanceId}"`)}<div class="button-row"><button class="btn primary" data-action="claim-reward" data-card="${c.instanceId}">덱에 추가</button></div></div>`).join('')}</div><div class="button-row" style="margin-top:14px"><button class="btn" data-action="skip-reward">보상 건너뛰기</button></div></div></div>`},
- treasure(){const id=Game.state.reward.treasure,r=RELICS[id];return `<div class="screen center"><div class="ending"><div class="big-symbol">◆</div><h2>오래된 보물</h2><div class="panel pad"><h3 class="gold">${r.name}</h3><p>${r.description}</p><span class="tag">${r.rarity}</span></div><div class="button-row" style="margin-top:14px"><button class="btn primary" data-action="claim-treasure">유물을 챙긴다</button></div></div></div>`},
- event(){const e=Game.state.event;return `<div class="screen center"><div style="max-width:760px;width:100%"><div class="small gold">EVENT</div><h2 style="font-size:2.4rem;margin:.2em 0">${e.title}</h2><p class="subtitle" style="text-align:left;margin:0">${e.text}</p><div class="grid" style="margin-top:18px">${e.choices.map((c,i)=>`<button class="panel content-card" style="text-align:left" data-action="event-choice" data-index="${i}"><b>${c.label}</b><div class="small" style="margin-top:6px">${c.text||''}</div></button>`).join('')}</div></div></div>`},
- shop(){const inv=ShopSystem.inventory();return `<div class="screen">${this.header()}<div style="max-width:1000px;width:100%;margin:auto"><div class="panel pad"><h2 style="margin-top:0">황혼의 상점</h2><div class="small">가진 골드: <span class="gold">${Game.state.gold}</span></div></div><div class="choice-grid" style="margin-top:14px">${inv.map((it,i)=>{let title,desc;if(it.kind==='card'){title=CARDS[it.id].name;desc=CARDS[it.id].description}else if(it.kind==='heal'){title='상처 봉합';desc='HP 20 회복'}else if(it.kind==='remove'){title='카드 제거';desc='덱에서 카드 1장 제거'}else{title=RELICS[it.id].name;desc=RELICS[it.id].description}return `<div class="panel content-card"><span class="tag">◆ ${it.cost}</span><h3>${title}</h3><p class="small">${desc}</p><button class="btn primary" data-action="shop-buy" data-index="${i}">구매</button></div>`}).join('')}</div><div class="button-row" style="margin-top:16px"><button class="btn" data-action="back-map">상점 나가기</button></div></div></div>`},
- rest(){return `<div class="screen center"><div style="max-width:800px;width:100%"><div class="big-symbol">♨</div><h2 style="font-size:2.5rem">쇠락한 모닥불</h2><p class="subtitle">불꽃은 약하지만, 아직 완전히 꺼지지는 않았다.</p><div class="choice-grid" style="margin-top:16px"><div class="panel content-card"><h3>휴식</h3><p class="small">HP 24 회복</p><button class="btn primary" data-action="rest-heal">회복한다</button></div><div class="panel content-card"><h3>강화</h3><p class="small">카드 1장을 강화한다.</p><button class="btn" ${RestSystem.canUpgrade()?'':'disabled'} data-action="rest-upgrade">강화한다</button></div></div></div></div>`},
+ renderApp(s){switch(s.screen){case'menu':return this.menu();case'character':return this.character();case'map':return this.map();case'battle':return this.battle();case'reward':return this.reward();case'rewardTreasure':return this.treasure();case'event':return this.event();case'shop':return this.shop();case'rest':return this.rest();case'removeCard':return this.removeCard();case'upgradeCard':return this.upgradeCard();case'win':return this.ending(true);case'lose':return this.ending(false);case'error':return this.errorScreen();default:return this.menu()}},
+  statusTooltipHTML(id,value,targetLabel=''){
+    const d=STATUS_EFFECTS[id];
+    if(!d)return '';
+    return `<div class="tooltip-title">${d.label} <span class="tooltip-value">${value}</span></div><div class="tooltip-meta">${d.name}${targetLabel?` · ${targetLabel}`:''}</div><div class="tooltip-desc">${d.description}</div>`;
+  },
+  relicTooltipHTML(id){
+    const d=RELICS[id];
+    if(!d)return '';
+    const rarity=({starter:'시작 유물',common:'일반 유물',uncommon:'희귀 유물',rare:'희귀 유물'}[d.rarity]||'유물');
+    return `<div class="tooltip-title">◆ ${d.name}</div><div class="tooltip-meta">${rarity}</div><div class="tooltip-desc">${d.description}</div>`;
+  },
+  showTooltip(kind,id,el){
+    const box=document.getElementById('status-tooltip');
+    if(!box)return;
+    const html=kind==='status'?this.statusTooltipHTML(id,el.dataset.value||'',el.dataset.target||''):this.relicTooltipHTML(id);
+    if(!html)return;
+    box.innerHTML=html;box.setAttribute('aria-hidden','false');box.classList.add('show');
+    const r=el.getBoundingClientRect(),bw=Math.min(280,Math.max(190,window.innerWidth-24));
+    box.style.width='auto';box.style.maxWidth=bw+'px';
+    const x=Math.min(Math.max(12,r.left+r.width/2-bw/2),window.innerWidth-bw-12);
+    const y=r.top-box.offsetHeight-10>=12?r.top-box.offsetHeight-10:Math.min(window.innerHeight-12,r.bottom+10);
+    box.style.left=x+'px';box.style.top=y+'px';
+  },
+  hideTooltip(){const box=document.getElementById('status-tooltip');if(box){box.classList.remove('show');box.setAttribute('aria-hidden','true');}},
+ header(extra=''){const relics=(Game.state.relics||[]).map(r=>`<button class="relic-chip inspectable" data-action="inspect-relic" data-id="${r}" aria-label="${RELICS[r]?.name||r}">◆</button>`).join('');return `<div class="topbar"><div class="brand">ASHEN OATH</div><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end">${extra}${relics?`<div class="relic-strip" style="max-width:180px">${relics}</div>`:''}<span class="pill">♥ ${Game.state.player?Game.state.player.hp+'/'+Game.state.player.maxHp:'—'}</span><span class="pill gold">◆ ${Game.state.gold||0}</span></div></div>`},
+ menu(){let save=false;try{const raw=localStorage.getItem('ashen-oath-save');save=!!raw&&JSON.parse(raw)?.version===BUILD_VERSION}catch{};return `<div class="screen center"><div style="text-align:center"><div class="small" style="letter-spacing:5px">어두운 덱빌딩 로그라이크</div><h1 class="title">ASHEN OATH</h1><p class="subtitle">재와 피의 맹세를 짊어진 사냥꾼의 여정이 시작된다.</p><div class="menu-actions" style="margin-top:24px"><button class="btn primary" data-action="new-run">새로운 맹세</button>${save?'<button class="btn" data-action="continue-run">이어서 하기</button>':''}<button class="btn" data-action="show-guide">게임 구조 보기</button></div><p class="small" style="margin-top:18px">HTML / CSS / 순수 JavaScript · 외부 라이브러리 없음</p><div class="version-mark">v1.2.0 · 전투 상태 개편 + 다중 적 + 카드 확장</div></div></div>`},
+ character(){const chars=Object.values(CHARACTERS);return `<div class="screen">${this.header()}<div style="max-width:980px;width:100%;margin:auto"><h2>사냥꾼을 선택하라</h2><div class="grid grid-2">${chars.map((c,i)=>`<div class="panel character-card ${i===0?'selected':''}"><div class="character-art"><div class="silhouette"></div></div><h3>${c.name}</h3><p class="small">체력 ${c.maxHp} · 에너지 ${c.maxEnergy}</p><p>${c.description}</p><div class="small">시작 유물: ${(c.startRelics||[]).map(r=>RELICS[r]?.name||r).join(', ')||'없음'}</div><div class="button-row" style="margin-top:10px"><button class="btn primary" data-action="start-character" data-id="${c.id}">이 캐릭터로 시작</button></div></div>`).join('')}</div><div class="button-row" style="margin-top:14px"><button class="btn" data-action="back-menu">뒤로</button></div></div></div>`},
+ map(){const next=MapSystem.nextOptions(),nodes=Game.state.map.nodes,cols=Game.state.map.cols,rows=Game.state.map.rows,width=Math.max(980,cols*155),height=rows*88;const lines=nodes.map(n=>n.next.map(id=>{const t=nodes.find(x=>x.id===id);if(!t)return '';const x1=(n.col+.5)/cols*100,x2=(t.col+.5)/cols*100,y1=(rows-n.row-.5)/rows*100,y2=(rows-t.row-.5)/rows*100;return `<line x1="${x1}%" y1="${y1}%" x2="${x2}%" y2="${y2}%" stroke="rgba(161,130,87,.24)" stroke-width="2"/>`}).join('')).join('');return `<div class="screen">${this.header('<span class="pill">제1막 · 잿빛 성당</span>')}<div class="panel pad"><div style="display:flex;justify-content:space-between;align-items:end;gap:10px"><div><h2 style="margin:.2rem 0">잿빛 성당의 길</h2><div class="small">15개의 층을 따라 여러 경로가 갈라지고 합쳐진다.</div></div><button class="btn" data-action="open-deck">덱 / 유물</button></div></div><div class="map-wrap"><div class="map-grid sts-map" style="width:${width}px;height:${height}px;grid-template-columns:repeat(${cols},1fr);grid-template-rows:repeat(${rows},1fr);min-height:${height}px"><svg class="map-lines" viewBox="0 0 100 100" preserveAspectRatio="none">${lines}</svg>${nodes.map(n=>{const visited=Game.state.visitedNodes.includes(n.id),available=next.some(q=>q.id===n.id),info=NODE_INFO[n.type];return `<div class="map-node ${visited?'done':''} ${available?'current':''}" style="grid-column:${n.col+1};grid-row:${rows-n.row}"><button title="${info.label}" ${available?'data-action="map-node" data-id="'+n.id+'"':'aria-disabled="true"'}>${info.icon}</button><div class="label">${n.row===7?'보물':n.row===13?'휴식':n.row===14?'보스':info.label}</div></div>`}).join('')}</div></div><div class="panel pad"><div class="small">진행 요약</div><div class="grid grid-4"><div class="stat"><span class="small">체력</span><b>${Game.state.player.hp}/${Game.state.player.maxHp}</b></div><div class="stat"><span class="small">골드</span><b>${Game.state.gold}</b></div><div class="stat"><span class="small">덱</span><b>${Game.state.deck.length}</b></div><div class="stat"><span class="small">유물</span><b>${Game.state.relics.length}</b></div></div></div></div>`},
+  battle(){
+    const b=Game.state.battle;if(!b)return '';
+    const p=b.player;
+    const statusHTML=(obj,targetLabel)=>Object.entries(obj.statuses||{}).filter(([k,v])=>typeof v==='number'&&v>0&&STATUS_EFFECTS[k]).map(([k,v])=>`<button class="combat-status ${['strength','flameBarrier','corruption','juggernaut','demonForm'].includes(k)?'positive':'negative'} inspectable" data-action="inspect-status" data-id="${k}" data-value="${v}" data-target="${targetLabel||''}" aria-label="${STATUS_EFFECTS[k].label} ${v}">${STATUS_EFFECTS[k].label} ${v}</button>`).join('');
+    const hand=b.hand.map((c,i)=>this.cardHTML(c,i)).join('');
+    const relics=Game.state.relics.map(r=>`<button class="relic-chip inspectable" data-action="inspect-relic" data-id="${r}" aria-label="${RELICS[r]?.name||r}">◆</button>`).join('');
+    const feed=(b.log||[]).slice(0,4).map(x=>`<div class="feed-line">${x}</div>`).join('');
+    const currentNode=Game.state.map?.nodes?.find(n=>n.id===Game.state.currentNodeId);const floor=Math.min(15,Math.max(1,(currentNode?.row??0)+1));
+    const playerHpPct=Math.max(0,Math.round(100*p.hp/p.maxHp));
+    const drawFx=(b.fx?.drawCount||0)>0?`<div class="draw-animation">${Array.from({length:Math.min(5,b.fx.drawCount)}).map((_,i)=>`<i class="draw-card" style="animation-delay:${i*0.07}s"></i>`).join('')}<span class="draw-label">카드 ${b.fx.drawCount}장</span></div>`:'';
+    const shuffleFx=b.fx?.shuffle?`<div class="shuffle-animation"><i class="shuffle-card"></i><i class="shuffle-card"></i><i class="shuffle-card"></i><span class="shuffle-label">덱 섞기</span></div>`:'';
+    const playFx=b.fx?.playedCard?`<div class="card-play-overlay"><div><div class="play-card-symbol">${b.fx.playedCard.type==='attack'?'⚔':b.fx.playedCard.type==='skill'?'✦':'☽'}</div><div class="play-card-name">${b.fx.playedCard.name}</div></div></div>`:'';
+    const enemies=b.enemies.map((e,i)=>{const hpPct=Math.max(0,Math.round(100*e.hp/e.maxHp));const intentKind=e.intent?.kind?.includes('attack')?'attack':e.intent?.kind==='defend'?'defend':'buff';const intent=e.intent?`<div class="enemy-intent ${intentKind}"><span class="intent-icon">${intentKind==='attack'?'⚔':intentKind==='defend'?'🛡':'✦'}</span><div class="intent-num">${e.intent.amount||''}</div><div class="small">${e.intent.label||''}</div></div>`:'';return `<div class="enemy-unit ${i===b.targetIndex&&!e.dead?'targeted':''} ${e.dead?'dead':''}"><div class="enemy-target-tag">선택 대상</div><div class="enemy-select-hit" data-action="select-enemy" data-index="${i}"><div class="enemy-portrait combatant-box enemy-box ${b.kind==='boss'?'boss':''}"><div class="enemy-symbol ${b.kind==='boss'?'boss-symbol':''}">${e.symbol}</div>${intent}</div><div class="enemy-nameplate">${e.name} ${b.kind==='boss'?`<span class="tag">단계 ${e.phase}</span>`:''}</div></div><div class="enemy-sub">${e.hp} / ${e.maxHp} 체력${e.block?` · 🛡 ${e.block}`:''}</div><div class="enemy-hp hpbar"><div class="hpfill" style="width:${hpPct}%"></div></div><div class="status-row">${statusHTML(e,'적')||'<span class="small">상태 없음</span>'}</div></div>`}).join('');
+    return `<div class="battle-root"><div class="battle-top"><div class="battle-top-left"><div class="combat-player-summary"><span class="combat-player-name">잿빛 사냥꾼</span><span class="combat-hp-chip">♥ <b>${p.hp}/${p.maxHp}</b><span class="hp-mini"><i style="width:${playerHpPct}%"></i></span></span><span class="combat-gold-chip">◆ ${Game.state.gold}</span><span class="combat-floor-chip">제1막 · ${floor}/15층</span></div><div style="display:flex;align-items:center;gap:5px;margin-top:4px"><span class="combat-relic-label">유물</span><div class="relic-strip">${relics||'<span class="small">없음</span>'}</div></div></div><div class="combat-banner fx">${b.banner||'전투'}</div><div class="battle-top-right"><button class="btn" data-action="show-deck">덱 ${Game.state.deck.length}</button></div></div><div class="battle-stage"><div class="fog-band"></div><div class="duel-ground"></div><div class="duel-aura player"></div><div class="duel-aura enemy"></div><div class="duel-spark"></div><div class="duel-attack-line ${b.fx?.type==='hit'?'active':''}"></div><div class="combat-feed">${feed}</div><div class="combat-flash ${b.fx?.type||''}"></div>${playFx}${drawFx}${shuffleFx}<div class="enemy-select-help">적을 터치해 단일 대상 카드를 지정</div><div class="enemy-party">${enemies}</div><div class="player-cluster ${b.fx?.type==='hit'?'player-hit-anim':''}"><div class="player-portrait"><div class="player-avatar combatant-box player-box">♜</div><div class="player-meta"><div class="player-name">잿빛 사냥꾼</div><div class="player-hp-row"><span>${p.hp} / ${p.maxHp}</span><span>${p.block?`🛡 ${p.block}`:'방어도 0'}</span></div><div class="player-hpbar"><div style="width:${playerHpPct}%"></div></div></div></div><div class="player-status-line">${statusHTML(p,'플레이어')||'<span class="combat-status">상태 없음</span>'}</div></div><div class="energy-orb"><b>${p.energy}</b><small>에너지</small></div>${(b.fx?.floats||[]).map(f=>`<div class="${f.cls}" style="left:${f.x}%;top:${f.y}%">${f.text}</div>`).join('')}</div><div class="combat-bottom"><div class="hand-dock">${hand||'<div class="small">손패가 비어 있습니다.</div>'}</div><div class="end-turn-wrap"><button class="end-turn-btn" data-action="end-turn">턴 종료<span class="end-turn-sub">남은 에너지 ${p.energy}</span></button></div></div></div>`;
+  },
+ cardHTML(c,i){const d=CardSystem.data(c);if(!d)return '';const can=CardSystem.canPlay(c,Game.state.battle);const cost=Game.state.battle?CardSystem.cost(c,Game.state.battle):d.cost;const icon=d.type==='attack'?'⚔':d.type==='skill'?'✦':'☽';const rarity=CARD_RARITY_LABELS[d.rarity]||'일반';const typeLabel=CARD_TYPE_LABELS[d.type]||d.type;return `<button class="card ${d.type} rarity-${d.rarity} ${can?'':'disabled'}" data-action="play-card" data-index="${i}" ${can?'':'aria-disabled="true"'}><div class="card-inner"><div class="card-top"><span class="card-cost">${cost}</span><span class="card-rarity">${rarity}</span></div><div class="card-art"><span>${icon}</span></div><div class="card-copy"><div class="card-name">${d.name}</div><div class="card-type">${typeLabel}</div><div class="card-desc">${d.description}</div></div><div class="card-footer"><span>${c.upgraded?'✦ 강화됨':''}</span><span>${i+1}</span></div></div></button>`},
+ reward(){const r=Game.state.reward;return `<div class="screen center"><div style="max-width:1000px;width:100%"><div class="panel pad" style="text-align:center"><div class="small gold">전투 승리</div><h2 style="margin:.3em 0">전투에서 살아남았다</h2><p class="small">골드 ${r.gold}를 획득했다. 카드를 하나 선택하거나 보상을 건너뛸 수 있다.</p></div><div class="reward-grid" style="margin-top:14px">${r.cards.map(c=>{const d=CardSystem.data(c);return `<button class="panel content-card reward-card" data-action="claim-reward" data-card="${c.instanceId}"><div class="card ${d.type}"><div><div class="card-cost">${d.cost}</div><div class="card-name">${d.name}</div><div class="card-type">${CARD_TYPE_LABELS[d.type]||d.type} · ${CARD_RARITY_LABELS[d.rarity]||d.rarity}</div></div><div class="card-desc">${d.description}</div></div><div class="button-row"><span class="btn primary">덱에 추가</span></div></button>`}).join('')}</div><div class="button-row" style="margin-top:14px"><button class="btn" data-action="skip-reward">보상 건너뛰기</button></div></div></div>`},
+ treasure(){const id=Game.state.reward.treasure,r=RELICS[id];return `<div class="screen center"><div class="ending"><div class="big-symbol">◆</div><h2>오래된 보물</h2><div class="panel pad"><h3 class="gold">${r.name}</h3><p>${r.description}</p><span class="tag">${({starter:'시작',common:'일반',uncommon:'희귀',rare:'희귀',curse:'저주'}[r.rarity]||r.rarity)}</span></div><div class="button-row" style="margin-top:14px"><button class="btn primary" data-action="claim-treasure">유물을 챙긴다</button></div></div></div>`},
+ event(){const e=Game.state.event;if(!e)return '';if(e.phase==='result')return `<div class="screen center"><div style="max-width:760px;width:100%"><div class="small gold">이벤트 결과</div><h2 style="font-size:2.4rem;margin:.2em 0">${e.resultTitle||'결과'}</h2><div class="panel pad event-result"><div class="tag">선택한 행동</div><h3 style="margin:.8em 0 .4em">${e.chosenLabel}</h3><p style="font-size:1.05rem;line-height:1.7;margin:0">${e.resultText}</p></div><div class="button-row" style="margin-top:18px"><button class="btn primary" data-action="event-finish">계속</button></div></div></div>`;return `<div class="screen center"><div style="max-width:760px;width:100%"><div class="small gold">이벤트</div><h2 style="font-size:2.4rem;margin:.2em 0">${e.title}</h2><p class="subtitle" style="text-align:left;margin:0">${e.text}</p><div class="grid" style="margin-top:18px">${e.choices.map((c,i)=>`<button class="panel content-card event-choice" style="text-align:left" data-action="event-choice" data-index="${i}"><b>${c.label}</b>${c.cost?`<div class="small gold" style="margin-top:6px">비용 ◆ ${c.cost}</div>`:''}</button>`).join('')}</div></div></div>`},
+ shop(){const inv=ShopSystem.inventory();return `<div class="screen">${this.header()}<div style="max-width:1000px;width:100%;margin:auto"><div class="panel pad"><h2 style="margin-top:0">황혼의 상점</h2><div class="small">가진 골드: <span class="gold">${Game.state.gold}</span></div></div><div class="choice-grid" style="margin-top:14px">${inv.map((it,i)=>{let title,desc;if(it.kind==='card'){title=CARDS[it.id].name;desc=CARDS[it.id].description}else if(it.kind==='heal'){title='상처 봉합';desc='체력 20 회복'}else if(it.kind==='remove'){title='카드 제거';desc='덱에서 카드 1장 제거'}else{title=RELICS[it.id].name;desc=RELICS[it.id].description}return `<div class="panel content-card"><span class="tag">◆ ${it.cost}</span><h3>${title}</h3><p class="small">${desc}</p><button class="btn primary" data-action="shop-buy" data-index="${i}">구매</button></div>`}).join('')}</div><div class="button-row" style="margin-top:16px"><button class="btn" data-action="back-map">상점 나가기</button></div></div></div>`},
+ rest(){return `<div class="screen center"><div style="max-width:800px;width:100%"><div class="big-symbol">♨</div><h2 style="font-size:2.5rem">쇠락한 모닥불</h2><p class="subtitle">불꽃은 약하지만, 아직 완전히 꺼지지는 않았다.</p><div class="choice-grid" style="margin-top:16px"><div class="panel content-card"><h3>휴식</h3><p class="small">체력 24 회복</p><button class="btn primary" data-action="rest-heal">회복한다</button></div><div class="panel content-card"><h3>강화</h3><p class="small">카드 1장을 강화한다.</p><button class="btn" ${RestSystem.canUpgrade()?'':'disabled'} data-action="rest-upgrade">강화한다</button></div></div></div></div>`},
  removeCard(){return `<div class="screen"><div style="max-width:980px;width:100%;margin:auto"><h2>삭제할 카드를 고르세요</h2><p class="small">한 장을 제거하면 상점으로 돌아갑니다.</p><div class="collection">${Game.state.deck.map(c=>`<div class="card" data-action="remove-card" data-instance="${c.instanceId}"><div class="card-name">${CardSystem.label(c)}</div><div class="card-desc">${CardSystem.data(c).description}</div></div>`).join('')}</div><div class="button-row" style="margin-top:12px"><button class="btn" data-action="back-shop">취소</button></div></div></div>`},
  upgradeCard(){return `<div class="screen"><div style="max-width:980px;width:100%;margin:auto"><h2>강화할 카드를 고르세요</h2><p class="small">강화된 카드는 전투에서 즉시 더 강해집니다.</p><div class="collection">${Game.state.deck.filter(c=>!c.upgraded&&CARDS[c.id].upgrade).map(c=>`<div class="card" data-action="upgrade-card" data-instance="${c.instanceId}"><div class="card-name">${CardSystem.data(c).name} → +</div><div class="card-desc">${CARDS[c.id].upgrade.description}</div></div>`).join('')||'<div class="small">강화할 수 있는 카드가 없습니다.</div>'}</div><div class="button-row" style="margin-top:12px"><button class="btn" data-action="back-map">돌아가기</button></div></div></div>`},
- ending(win){return `<div class="screen center"><div class="ending"><div class="big-symbol">${win?'✠':'☠'}</div><div class="small gold">${win?'THE OATH IS FULFILLED':'THE OATH HAS ENDED'}</div><h2>${win?'ASHEN OATH':'YOU DIED'}</h2><p>${win?'Bloodbound Saint가 무너지고, 성당의 종이 오랜만에 울렸다. 하지만 이 세계의 저주는 끝나지 않았다.':'당신은 무너졌지만, 성당은 여전히 살아 있다. 다음 맹세에서 다른 길을 택할 수 있다.'}</p><div class="button-row"><button class="btn primary" data-action="new-run">새로운 맹세</button><button class="btn" data-action="back-menu">메인으로</button></div></div></div>`},
- bind(){document.querySelectorAll('[data-action]').forEach(el=>el.onclick=()=>this.handle(el.dataset.action,el));},
- handle(action,el){AudioManager.playSFX('button');switch(action){case'new-run':Game.setScreen('character');break;case'continue-run':Game.load();Game.render();break;case'back-menu':Game.state=Game.newGame();Game.render();break;case'start-character':Game.startCharacter(el.dataset.id);break;case'map-node':MapSystem.enterNode(el.dataset.id);break;case'play-card':BattleSystem.playCard(+el.dataset.index);break;case'end-turn':BattleSystem.endTurn();break;case'claim-reward':{const id=el.dataset.card;const c=Game.state.reward.cards.find(x=>x.instanceId===id);if(c)RewardSystem.claimCard(c);break}case'skip-reward':RewardSystem.skip();break;case'claim-treasure':RewardSystem.claimTreasure();break;case'event-choice':EventSystem.choose(Game.state.event.choices[+el.dataset.index]);break;case'shop-buy':{const inv=ShopSystem.inventory();ShopSystem.buy(inv[+el.dataset.index]);break}case'back-map':MapSystem.continueAfterNode();break;case'rest-heal':RestSystem.heal();break;case'rest-upgrade':RestSystem.openUpgrade();break;case'remove-card':ShopSystem.remove(el.dataset.instance);break;case'back-shop':Game.state.screen='shop';Game.render();break;case'upgrade-card':RestSystem.upgrade(el.dataset.instance);break;case'open-deck':this.showDeck();break;case'show-pile':this.showPile(el.dataset.pile);break;case'show-guide':this.showGuide();break;}}
- ,showDeck(){this.modal(`<h2>덱 / 유물</h2><div class="small">총 ${Game.state.deck.length}장 · 유물 ${Game.state.relics.length}개</div><div class="sep"></div><div class="collection">${Game.state.deck.map(c=>`<div class="card"><div class="card-name">${CardSystem.label(c)}</div><div class="card-desc">${CardSystem.data(c).description}</div></div>`).join('')}</div><div class="sep"></div>${Game.state.relics.map(r=>`<div class="small" style="margin:7px 0"><b class="gold">◆ ${RELICS[r].name}</b><br>${RELICS[r].description}</div>`).join('')}`)},
- showPile(kind){const b=Game.state.battle;const pile=b?b[kind+'Pile']:[];this.modal(`<h2>${kind.toUpperCase()}</h2><div class="collection">${pile.map(c=>`<div class="card"><div class="card-name">${CardSystem.label(c)}</div><div class="card-desc">${CardSystem.data(c).description}</div></div>`).join('')||'<div class="small">비어 있습니다.</div>'}</div>`)},
- showGuide(){this.modal(`<h2>콘텐츠 추가 방법</h2><p class="small">이 프로토타입은 핵심 로직과 콘텐츠 데이터를 분리했습니다. 아래 DATA 영역에 객체를 추가하는 방식으로 확장할 수 있습니다.</p><div class="panel pad" style="margin:10px 0"><b>새 카드</b><pre>CARDS.newCard = { id:'newCard', name:'New Card', cost:1, type:'attack', rarity:'common', description:'10 피해', effects:[{type:'damage',amount:10}] };</pre></div><div class="panel pad" style="margin:10px 0"><b>새 적</b><pre>ENEMIES.newEnemy = { id:'newEnemy', name:'New Enemy', maxHp:40, symbol:'☠', gold:20, actions:[{kind:'attack',amount:8,label:'공격 8'}] };</pre></div><div class="panel pad" style="margin:10px 0"><b>새 유물</b><pre>RELICS.newRelic = { id:'newRelic', name:'New Relic', description:'턴 시작 효과', hooks:{onTurnStart:[{type:'draw',amount:1}]} };</pre></div><div class="panel pad" style="margin:10px 0"><b>새 이벤트</b><pre>EVENTS.newEvent = { id:'newEvent', title:'...', text:'...', choices:[...] };</pre></div><div class="panel pad" style="margin:10px 0"><b>새 보스</b><pre>BOSSES.newBoss = { id:'newBoss', name:'New Boss', maxHp:120, phases:[{threshold:1,actions:[...]},{threshold:.5,actions:[...]}] };</pre></div><p class="small">파일 맨 아래의 UI/엔진 영역은 그대로 두고 DATA 객체만 확장하는 것을 권장합니다.</p>`)}
+ errorScreen(){return `<div class="screen center"><div class="ending"><div class="big-symbol">⚠</div><div class="small blood">오류</div><h2>진행 오류</h2><p>${String(Game.state.errorMessage||'알 수 없는 오류').replace(/</g,'&lt;')}</p><div class="button-row"><button class="btn primary" data-action="new-run">새로운 맹세</button><button class="btn" data-action="back-menu">메인으로</button></div></div></div>`},
+ending(win){return `<div class="screen center"><div class="ending"><div class="big-symbol">${win?'✠':'☠'}</div><div class="small gold">${win?'맹세가 이루어졌다':'맹세가 끝났다'}</div><h2>${win?'ASHEN OATH':'죽었다'}</h2><p>${win?'피에 묶인 성자가 무너지고, 성당의 종이 오랜만에 울렸다. 하지만 이 세계의 저주는 끝나지 않았다.':'당신은 무너졌지만, 성당은 여전히 살아 있다. 다음 맹세에서 다른 길을 택할 수 있다.'}</p><div class="button-row"><button class="btn primary" data-action="new-run">새로운 맹세</button><button class="btn" data-action="back-menu">메인으로</button></div></div></div>`},
+ postRender(){if(!Game.state.battle)return;const b=Game.state.battle;const stage=document.querySelector('.battle-stage');if(!stage)return;const flash=stage.querySelector('.combat-flash');if(flash&&b.fx?.type)flash.classList.add(b.fx.type);if((b.fx?.floats||[]).length){setTimeout(()=>{if(Game.state.battle?.fx)Game.state.battle.fx.floats=[]},720)}setTimeout(()=>{if(Game.state.battle?.fx){Game.state.battle.fx.playedCard=null;Game.state.battle.fx.drawCount=0;Game.state.battle.fx.shuffle=false;}document.querySelectorAll('.combat-banner').forEach(el=>el.classList.remove('fx'))},760)},
+ bind(){
+   if(!this._tooltipBound){document.addEventListener('click',(ev)=>{if(!ev.target.closest('.inspectable'))this.hideTooltip();});window.addEventListener('resize',()=>this.hideTooltip());this._tooltipBound=true;}
+   document.querySelectorAll('[data-action]').forEach(el=>{
+     if(el.dataset.bound==='1')return;
+     el.dataset.bound='1';
+     el.addEventListener('click',(ev)=>{
+       if(el.getAttribute('aria-disabled')==='true')return;
+       ev.preventDefault();
+       ev.stopPropagation();
+       this.handle(el.dataset.action,el);
+     },{passive:false});
+   });
+ },
+ handle(action,el){
+   try{
+     switch(action){
+       case'new-run':Game.setScreen('character');break;
+       case'continue-run':Game.load();Game.render();break;
+       case'back-menu':localStorage.removeItem('ashen-oath-save');Game.state=Game.newGame();Game.render();break;
+       case'start-character':Game.startCharacter(el.dataset.id);break;
+       case'map-node':MapSystem.enterNode(el.dataset.id);break;
+       case'play-card':BattleSystem.playCard(+el.dataset.index);break;
+       case'select-enemy':BattleSystem.selectTarget(+el.dataset.index);break;
+       case'end-turn':BattleSystem.endTurn();break;
+       case'claim-reward':{const id=el.dataset.card;const c=Game.state.reward.cards.find(x=>x.instanceId===id);if(c)RewardSystem.claimCard(c);break}
+       case'skip-reward':RewardSystem.skip();break;
+       case'claim-treasure':RewardSystem.claimTreasure();break;
+       case'event-choice':EventSystem.choose(Game.state.event.choices[+el.dataset.index]);break;case'event-finish':EventSystem.finish();break;
+       case'shop-buy':{const inv=ShopSystem.inventory();ShopSystem.buy(inv[+el.dataset.index]);break}
+       case'back-map':MapSystem.continueAfterNode();break;
+       case'rest-heal':RestSystem.heal();break;
+       case'rest-upgrade':RestSystem.openUpgrade();break;
+       case'remove-card':ShopSystem.remove(el.dataset.instance);break;
+       case'back-shop':Game.state.screen='shop';Game.save();Game.render();break;
+       case'upgrade-card':RestSystem.upgrade(el.dataset.instance);break;
+       case'open-deck':this.showDeck();break;
+       case'show-pile':this.showPile(el.dataset.pile);break;case'show-deck':this.showDeck();break;
+       case'inspect-status':this.showTooltip('status',el.dataset.id,el);break;
+       case'inspect-relic':this.showTooltip('relic',el.dataset.id,el);break;
+       case'show-guide':this.showGuide();break;
+     }
+     if(!['play-card','end-turn'].includes(action))AudioManager.playSFX('button');
+   }catch(err){
+     console.error(err);
+     Game.showFatalError('오류: '+(err?.message||'알 수 없는 오류'));
+   }
+ },showDeck(){
+    const deckCards=(Game.state.deck||[]).map(c=>{
+      const d=CardSystem.data(c);
+      return `<div class="card"><div class="card-name">${CardSystem.label(c)}</div><div class="card-desc">${d?.description||'카드 정보를 불러올 수 없습니다.'}</div></div>`;
+    }).join('');
+    const relics=(Game.state.relics||[]).map(r=>{
+      const d=RELICS[r];
+      return d?`<div class="small" style="margin:7px 0"><b class="gold">◆ ${d.name}</b><br>${d.description}</div>`:'';
+    }).join('');
+    this.modal(`<h2>덱 / 유물</h2><div class="small">총 ${Game.state.deck.length}장 · 유물 ${Game.state.relics.length}개</div><div class="sep"></div><div class="collection">${deckCards||'<div class="small">덱이 비어 있습니다.</div>'}</div><div class="sep"></div>${relics||'<div class="small">유물이 없습니다.</div>'}`);
+  },
+ showPile(kind){
+    const b=Game.state.battle;
+    const piles={draw:b?.drawPile||[],discard:b?.discard||[],exhaust:b?.exhaust||[]};
+    const labels={draw:'뽑기 더미',discard:'버린 카드 더미',exhaust:'소멸 더미'};
+    const pile=piles[kind]||[];
+    const cards=pile.map(c=>{
+      const d=CardSystem.data(c);
+      return `<div class="card"><div class="card-name">${CardSystem.label(c)}</div><div class="card-desc">${d?.description||'카드 정보를 불러올 수 없습니다.'}</div></div>`;
+    }).join('');
+    this.modal(`<h2>${labels[kind]||kind}</h2><div class="small">현재 ${pile.length}장</div><div class="sep"></div><div class="collection">${cards||'<div class="small">비어 있습니다.</div>'}</div>`);
+  }, showGuide(){this.modal(`<h2>콘텐츠 추가 방법</h2><p class="small">이 프로토타입은 핵심 로직과 콘텐츠 데이터를 분리했습니다. 아래 DATA 영역에 객체를 추가하는 방식으로 확장할 수 있습니다.</p><div class="panel pad" style="margin:10px 0"><b>새 카드</b><pre>CARDS.newCard = { id:'newCard', name:'New Card', cost:1, type:'attack', rarity:'common', description:'10 피해', effects:[{type:'damage',amount:10}] };</pre></div><div class="panel pad" style="margin:10px 0"><b>새 적</b><pre>ENEMIES.newEnemy = { id:'newEnemy', name:'New Enemy', maxHp:40, symbol:'☠', gold:20, actions:[{kind:'attack',amount:8,label:'공격 8'}] };</pre></div><div class="panel pad" style="margin:10px 0"><b>새 유물</b><pre>RELICS.newRelic = { id:'newRelic', name:'New Relic', description:'턴 시작 효과', hooks:{onTurnStart:[{type:'draw',amount:1}]} };</pre></div><div class="panel pad" style="margin:10px 0"><b>새 이벤트</b><pre>이벤트S.newEvent = { id:'newEvent', title:'...', text:'...', choices:[...] };</pre></div><div class="panel pad" style="margin:10px 0"><b>새 보스</b><pre>BOSSES.newBoss = { id:'newBoss', name:'New Boss', maxHp:120, phases:[{threshold:1,actions:[...]},{threshold:.5,actions:[...]}] };</pre></div><p class="small">파일 맨 아래의 UI/엔진 영역은 그대로 두고 DATA 객체만 확장하는 것을 권장합니다.</p><div class="panel pad" style="margin:10px 0"><b>새 상태이상</b><pre>STATUS_EFFECTS.foo = { id:'foo', name:'Foo', label:'푸', color:'foo', description:'터치했을 때 표시할 간략한 설명' };
+// 실제 효과가 필요하면 resolveEffect / processStatuses에 해당 규칙을 추가합니다.</pre></div>`)}
  ,modal(inner){const m=document.getElementById('modal');m.innerHTML=`<div class="modal-content panel"> <button class="btn modal-close" onclick="UI.closeModal()">닫기</button>${inner}</div>`;m.classList.remove('hidden')},closeModal(){document.getElementById('modal').classList.add('hidden')}};
 
 // 카드 및 시스템 확장 예시: 위 DATA 객체만 추가해도 렌더링/전투 시스템이 자동으로 처리하도록 설계됨.
 // 새 카드 추가: CARDS.newCard = { id, name, cost, type, rarity, description, effects:[...] }
+// 광역/다중 대상 효과: damageAll, damageHits, damageRandom, statusAll 등을 재사용
+// 모든 콘텐츠는 DATA 객체에 추가하고, 가능한 경우 Effects/Status/Relic hook을 재사용합니다.
 // 새 적 추가: ENEMIES.newEnemy = { id, name, maxHp, symbol, gold, actions:[...] }
 // 새 보스 추가: BOSSES.newBoss = { id, name, maxHp, phases:[{threshold,actions:[]}, ...] }
 // 새 유물 추가: RELICS.newRelic = { id, name, description, hooks:{onTurnStart:[], onCardPlayed:[], ...} }
-// 새 이벤트 추가: EVENTS.newEvent = { id, title, text, choices:[...] }
+// 새 이벤트 추가: 이벤트S.newEvent = { id, title, text, choices:[...] }
 // 새 상태이상 추가: STATUS_EFFECTS.foo = {name:'Foo',label:'...',color:'...'} + process/효과 로직 확장 필요
 // 새 맵 노드 추가: MapSystem.createMap()의 nodes에 {id,type,next:[...]}를 추가하고 NODE_INFO에 표시 정보를 추가.
 // 새 캐릭터 추가: CHARACTERS 객체에 maxHp/maxEnergy/startDeck/startRelics/description을 추가하고 startCharacter의 UI 선택지만 확장.
@@ -329,6 +1187,7 @@ const UI={
 // 새 이미지: Renderer를 별도 파일로 분리한 뒤 character/enemy/background/card 출력 부분을 canvas/img로 교체하면 된다.
 
 Game.init();
+
 </script>
 </body>
 </html>
